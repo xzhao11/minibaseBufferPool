@@ -1,0 +1,212 @@
+\batchmode
+
+\documentstyle[psfig]{article}
+\makeatletter
+
+\include{psfig}
+
+\addtolength {\oddsidemargin}{-0.75in}
+ 
+
+\setlength {\textwidth}{6.25in}
+ 
+
+\font\bigheadfont=cmss12 at 12truept
+\font\medheadfont=cmss10 at 10truept
+\font\smallheadfont=cmssq8 at 8truept
+
+ 
+
+\def\uwhead{{
+\bigheadfont\centerline{UNIVERSITY OF WISCONSIN--MADISON}
+\medheadfont\baselineskip=.43cm\centerline{COMPUTER SCIENCES DEPARTMENT}
+\vskip.15cm
+\centerline{CS 564:  DATABASE MANAGEMENT SYSTEMS}
+\bigheadfont\baselineskip=1.2em \vskip.25cm
+\centerline{Assignment 3:  B+ Trees}
+\centerline{Due: September 27, 1996}
+\medheadfont \vskip .2cm
+\centerline{Instructors:  Jeff Naughton and Raghu Ramakrishnan}
+\vskip .2cm}}
+
+\def\endash{{\the\textfont0--}}
+
+\def\emdash{{\the\textfont0---}}
+
+\renewcommand{\baselinestretch}{1.2}
+
+\def\x#1#2#3#4#5#6#7\relax{\def \x{#1#2#3#4#5#6}}
+
+\def\y{splain}
+
+\def\x{\endgroup\@setsize\SetFigFont{#2pt}}
+
+\makeatother
+\ifx\AtBeginDocument\undefined \newcommand{\AtBeginDocument}[1]{}\fi
+\newenvironment{tex2html_wrap}{}{}
+\newbox\sizebox
+\setlength{\hoffset}{0pt}\setlength{\voffset}{0pt}
+\addtolength{\textheight}{\footskip}\setlength{\footskip}{0pt}
+\addtolength{\textheight}{\topmargin}\setlength{\topmargin}{0pt}
+\addtolength{\textheight}{\headheight}\setlength{\headheight}{0pt}
+\addtolength{\textheight}{\headsep}\setlength{\headsep}{0pt}
+\setlength{\textwidth}{349pt}
+\newwrite\lthtmlwrite
+\makeatletter
+\let\realnormalsize=\normalsize
+\topskip=0pt
+\def\preveqno{}\let\real@float=\@float \let\realend@float=\end@float
+\def\@float{\let\@savefreelist\@freelist\real@float}
+\def\end@float{\realend@float\global\let\@freelist\@savefreelist}
+\let\real@dbflt=\@dbflt \let\end@dblfloat=\end@float
+\let\@largefloatcheck=\relax
+\def\@dbflt{\let\@savefreelist\@freelist\real@dbflt}
+\def\adjustnormalsize{\def\normalsize{\mathsurround=0pt \realnormalsize\parindent=0pt\abovedisplayskip=0pt\belowdisplayskip=0pt}\normalsize}
+\def\lthtmltypeout#1{{\let\protect\string\immediate\write\lthtmlwrite{#1}}}%
+\newcommand\lthtmlhboxmathA{\adjustnormalsize\setbox\sizebox=\hbox\bgroup}%
+\newcommand\lthtmlvboxmathA{\adjustnormalsize\setbox\sizebox=\vbox\bgroup%
+ \let\ifinner=\iffalse }%
+\newcommand\lthtmlboxmathZ{\@next\next\@currlist{}{\def\next{\voidb@x}}%
+ \expandafter\box\next\egroup}%
+\newcommand\lthtmlmathtype[1]{\def\lthtmlmathenv{#1}}%
+\newcommand\lthtmllogmath{\lthtmltypeout{l2hSize %
+:\lthtmlmathenv:\the\ht\sizebox::\the\dp\sizebox::\the\wd\sizebox.\preveqno}}%
+\newcommand\lthtmlfigureA[1]{\let\@savefreelist\@freelist
+       \lthtmlmathtype{#1}\lthtmlvboxmathA}%
+\newcommand\lthtmlfigureZ{\lthtmlboxmathZ\lthtmllogmath\copy\sizebox
+       \global\let\@freelist\@savefreelist}%
+\newcommand\lthtmldisplayA[1]{\lthtmlmathtype{#1}\lthtmlvboxmathA}%
+\newcommand\lthtmldisplayB[1]{\edef\preveqno{(\theequation)}%
+  \lthtmldisplayA{#1}\let\@eqnnum\relax}%
+\newcommand\lthtmldisplayZ{\lthtmlboxmathZ\lthtmllogmath\lthtmlsetmath}%
+\newcommand\lthtmlinlinemathA[1]{\lthtmlmathtype{#1}\lthtmlhboxmathA  \vrule height1.5ex width0pt }%
+\newcommand\lthtmlinlinemathZ{\egroup\expandafter\ifdim\dp\sizebox>0pt %
+  \expandafter\centerinlinemath\fi\lthtmllogmath\lthtmlsetmath}
+\def\lthtmlsetmath{\hbox{\vrule width.5pt\vtop{\vbox{%
+  \kern.5pt\kern0.8 pt\hbox{\hglue.5pt\copy\sizebox\hglue0.8 pt}\kern.5pt%
+  \ifdim\dp\sizebox>0pt\kern0.8 pt\fi}%
+  \ifdim\hsize>\wd\sizebox \hrule depth1pt\fi}}}
+\def\centerinlinemath{\dimen1=\ht\sizebox
+  \ifdim\dimen1<\dp\sizebox \ht\sizebox=\dp\sizebox
+  \else \dp\sizebox=\ht\sizebox \fi}
+
+\def\lthtmlcheckvsize{\ifdim\ht\sizebox<\vsize\expandafter\vfill
+  \else\expandafter\vss\fi}%
+\makeatletter
+
+
+\begin{document}
+\pagestyle{empty}\thispagestyle{empty}%
+\lthtmltypeout{latex2htmlLength hsize=\the\hsize}%
+\lthtmltypeout{latex2htmlLength vsize=\the\vsize}%
+\lthtmltypeout{latex2htmlLength hoffset=\the\hoffset}%
+\lthtmltypeout{latex2htmlLength voffset=\the\voffset}%
+\lthtmltypeout{latex2htmlLength topmargin=\the\topmargin}%
+\lthtmltypeout{latex2htmlLength topskip=\the\topskip}%
+\lthtmltypeout{latex2htmlLength headheight=\the\headheight}%
+\lthtmltypeout{latex2htmlLength headsep=\the\headsep}%
+\lthtmltypeout{latex2htmlLength parskip=\the\parskip}%
+\lthtmltypeout{latex2htmlLength oddsidemargin=\the\oddsidemargin}%
+\makeatletter
+\if@twoside\lthtmltypeout{latex2htmlLength evensidemargin=\the\evensidemargin}%
+\else\lthtmltypeout{latex2htmlLength evensidemargin=\the\oddsidemargin}\fi%
+\makeatother
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlfigureA{figure55}%
+\begin{figure}% latex2html id marker 55
+\begin{center}
+\begin{picture}
+(0,0)%
+\special{psfile=btreeone.pstex}%
+\end{picture}
+\setlength {\unitlength}{0.012500in}
+ 
+\begingroup 
+ \makeatletter\ifx\SetFigFont\undefined
+\expandafter
+\endgroup 
+ \@setsize\SetFigFont{#2pt}\fmtname xxxxxx\relax \ifx
+\endgroup 
+ \@setsize\SetFigFont{#2pt}splain\gdef\SetFigFont#1#2#3{\ifnum #1<17\tiny\else \ifnum #1<20\small\else
+  \ifnum #1<24\normalsize\else \ifnum #1<29\large\else
+  \ifnum #1<34\Large\else \ifnum #1<41\LARGE\else
+     \huge\fi\fi\fi\fi\fi\fi
+  \csname #3\endcsname}\else
+\gdef\SetFigFont#1#2#3{
+\begingroup 
+ 
+  \count@#1\relax \ifnum 25<\count@\count@25\fi
+  \expandafter
+\endgroup 
+ \@setsize\SetFigFont{#2pt}
+    \csname \romannumeral\the\count@ pt\expandafter\endcsname
+    \csname @\romannumeral\the\count@ pt\endcsname
+  \csname #3\endcsname}\fi
+\fi
+\endgroup 
+ 
+\begin{picture}
+(285,135)(55,640)
+\end{picture}
+
+\end{center}
+\end{figure}%
+\lthtmlfigureZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{figure71}%
+\begin{figure}% latex2html id marker 71
+\begin{center}
+\begin{picture}
+(0,0)%
+\special{psfile=btreetwo.pstex}%
+\end{picture}
+\setlength {\unitlength}{0.012500in}
+ 
+\begingroup 
+ \makeatletter\ifx\SetFigFont\undefined
+\expandafter
+\endgroup 
+ \@setsize\SetFigFont{#2pt}\fmtname xxxxxx\relax \ifx
+\endgroup 
+ \@setsize\SetFigFont{#2pt}splain\gdef\SetFigFont#1#2#3{\ifnum #1<17\tiny\else \ifnum #1<20\small\else
+  \ifnum #1<24\normalsize\else \ifnum #1<29\large\else
+  \ifnum #1<34\Large\else \ifnum #1<41\LARGE\else
+     \huge\fi\fi\fi\fi\fi\fi
+  \csname #3\endcsname}\else
+\gdef\SetFigFont#1#2#3{
+\begingroup 
+ 
+  \count@#1\relax \ifnum 25<\count@\count@25\fi
+  \expandafter
+\endgroup 
+ \@setsize\SetFigFont{#2pt}
+    \csname \romannumeral\the\count@ pt\expandafter\endcsname
+    \csname @\romannumeral\the\count@ pt\endcsname
+  \csname #3\endcsname}\fi
+\fi
+\endgroup 
+ 
+\begin{picture}
+(425,325)(50,450)
+\end{picture}
+
+\end{center}
+\end{figure}%
+\lthtmlfigureZ
+\hfill\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{section}
+\stepcounter{section}
+
+\end{document}

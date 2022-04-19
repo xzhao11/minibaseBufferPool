@@ -1,0 +1,20 @@
+The contend of this directory
+
+% ls
+README          javamini_hwk/   orig/           src/
+
+-- orig/
+   Contains the original code implemented by a team of students
+   for their 764/784 project.
+
+-- src/
+   Contains the modified and cleaned up version of the java minibase
+   software.  All packages should pass the tests under src/tests.
+
+-- javamini_hwk/
+   Contains the homework assignments (keys, sources, and handouts) for 
+   minibase in java.
+ 
+The complete version of java documentation (package index) is under
+src/javadoc
+

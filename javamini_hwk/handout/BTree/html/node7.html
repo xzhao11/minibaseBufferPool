@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>IndexFile and IndexFileScan</TITLE>
+<META NAME="description" CONTENT="IndexFile and IndexFileScan">
+<META NAME="keywords" CONTENT="BTree">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="BTree.css">
+<LINK REL="next" HREF="node8.html">
+<LINK REL="previous" HREF="node6.html">
+<LINK REL="up" HREF="node6.html">
+<LINK REL="next" HREF="node8.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html93"
+ HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/next_motif.gif"></A> 
+<A NAME="tex2html91"
+ HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/up_motif.gif"></A> 
+<A NAME="tex2html85"
+ HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html94"
+ HREF="node8.html">BTreeFile</A>
+<B> Up:</B> <A NAME="tex2html92"
+ HREF="node6.html">Other B+ Tree Classes</A>
+<B> Previous:</B> <A NAME="tex2html86"
+ HREF="node6.html">Other B+ Tree Classes</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H3><A NAME="SECTION00033100000000000000">
+IndexFile and IndexFileScan</A>
+</H3>
+<P>
+A BTree is one particular type of index.  There are other types, for example
+a Hash index.  However, all index types have some
+basic functionality in common.  We've taken this basic index functionality
+and created a <EM>abstract class</EM> called IndexFile.  You won't implement
+any methods for IndexFile.  However, any class derived from an IndexFile 
+should support <TT>&nbsp;IndexFile()</TT>, <TT>Delete()</TT>, and <TT>
+insert()</TT>.  And you might have to modified the <code>throws</code> 
+clause for the <TT>Delete()</TT> and <TT>insert()</TT> in IndexFile accordingly
+depending on how you should decide to handle the exceptions.
+<P>
+Likewise, an IndexFileScan is a abstract class
+that contains the basic functionality all index file scans should support.
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Qingqing Ouyang</I>
+<BR><I>12/11/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

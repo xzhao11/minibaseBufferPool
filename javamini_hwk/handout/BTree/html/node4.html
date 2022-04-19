@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>A Note on Keys for this Assignment</TITLE>
+<META NAME="description" CONTENT="A Note on Keys for this Assignment">
+<META NAME="keywords" CONTENT="BTree">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="BTree.css">
+<LINK REL="next" HREF="node5.html">
+<LINK REL="previous" HREF="node3.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node5.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html62"
+ HREF="node5.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/next_motif.gif"></A> 
+<A NAME="tex2html60"
+ HREF="node3.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/up_motif.gif"></A> 
+<A NAME="tex2html54"
+ HREF="node3.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html63"
+ HREF="node5.html">B+ Tree Page-Level Classes</A>
+<B> Up:</B> <A NAME="tex2html61"
+ HREF="node3.html">Design Overview</A>
+<B> Previous:</B> <A NAME="tex2html55"
+ HREF="node3.html">Design Overview</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00031000000000000000">
+A Note on Keys for this Assignment</A>
+</H2>
+<P>
+You should note that key values are passed to functions using <code>KeyClass</code>
+objects (an abstract class).  
+The  contents of a key should be interpreted using the
+<code>AttrType</code> variable.  
+The key can be either a string(attrString) or an integer(attrInteger), 
+as per the definition of AttrType in <EM>global</EM> package.  We just 
+implement these two kinds of keys in this assignment. 
+If the key is a string, its value is stored in a <code>StringKey</code> class
+which extends the <code>KeyClass</code> .  Likewise, if the key is an integer,
+its value is stored in a <code>IntegerKey</code> class that also extends
+the <code>KeyClass</code> .
+<P>
+Although using the above structure, keys can be of (the more general 
+enumerated) type AttrType, you can return an error message if the
+keys are not of type attrString or attrInteger.
+<P>
+The BTSortedPage class, which augments the
+<code>insertRecord</code>  method  of HFPage by storing 
+records on a page in sorted order according to a specified <EM>key</EM> value,
+assumes that the key value is included as the initial part of each
+record, to enable easy comparison of the key value of a new
+record with the key values of existing records on a page.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html62"
+ HREF="node5.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/next_motif.gif"></A> 
+<A NAME="tex2html60"
+ HREF="node3.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/up_motif.gif"></A> 
+<A NAME="tex2html54"
+ HREF="node3.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html63"
+ HREF="node5.html">B+ Tree Page-Level Classes</A>
+<B> Up:</B> <A NAME="tex2html61"
+ HREF="node3.html">Design Overview</A>
+<B> Previous:</B> <A NAME="tex2html55"
+ HREF="node3.html">Design Overview</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Qingqing Ouyang</I>
+<BR><I>12/11/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

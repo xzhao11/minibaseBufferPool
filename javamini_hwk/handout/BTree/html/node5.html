@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>B+ Tree Page-Level Classes</TITLE>
+<META NAME="description" CONTENT="B+ Tree Page-Level Classes">
+<META NAME="keywords" CONTENT="BTree">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="BTree.css">
+<LINK REL="next" HREF="node6.html">
+<LINK REL="previous" HREF="node4.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node6.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html72"
+ HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/next_motif.gif"></A> 
+<A NAME="tex2html70"
+ HREF="node3.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/up_motif.gif"></A> 
+<A NAME="tex2html64"
+ HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html73"
+ HREF="node6.html">Other B+ Tree Classes</A>
+<B> Up:</B> <A NAME="tex2html71"
+ HREF="node3.html">Design Overview</A>
+<B> Previous:</B> <A NAME="tex2html65"
+ HREF="node4.html">A Note on Keys</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00032000000000000000">
+B+ Tree Page-Level Classes</A>
+</H2>
+<P>
+These classes are summarized in Figure 1. 
+Note again that you must NOT add any private data members  to  <EM>
+BTIndexPage</EM>  or  <EM>BTLeafPage</EM>.
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="f1:btpages">&#160;</A><A NAME="41">&#160;</A>
+<TABLE>
+<CAPTION><STRONG>Figure 1:</STRONG>
+The C++ Classes used for the B+Tree pages</CAPTION>
+<TR><TD><IMG WIDTH="212" HEIGHT="16"
+ SRC="img4.gif"
+ ALT="\begin{figure}
+\centerline{
+\psfig {figure=btpages.eps,height=2in}
+}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+<BR>
+<P><UL>
+<LI>
+<EM>HFPage:</EM>
+This is the base class, you can look at <EM>heap</EM> package to get more details.
+<LI>
+<EM>BTSortedPage:</EM>
+This  class is  derived from the class HFPage.  Its only
+function is to  maintain records on  a HFPage in  a sorted order.
+Only the slot directory is re-arranged.  The data records remain in the
+same positions on the page.  This exploits the fact that the rids
+of index entries are not important: index entries (unlike data records)
+are never `pointed to' directly, and are only accessed by searching the
+index page.
+<LI>
+<EM>BTIndexPage:</EM>
+This class is derived from  BTSortedPage. It inserts records  of
+the type <IMG WIDTH="9" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.gif"
+ ALT="$\langle$"><EM>key, pageNo</EM><IMG WIDTH="9" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.gif"
+ ALT="$\rangle$"> on the  BTSortedPage. The records 
+are sorted by the key.
+<LI>
+<EM>BTLeafPage:</EM>
+This class is derived from BTSortedPage.  It inserts records of
+the type <IMG WIDTH="9" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.gif"
+ ALT="$\langle$"><EM>key, dataRid</EM><IMG WIDTH="9" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.gif"
+ ALT="$\rangle$"> on the  BTSortedPage. 
+<EM>dataRid</EM>
+is the rid of the data record. The records are sorted by the key.
+Further, leaf pages must be maintained in a doubly-linked list.
+</UL><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html72"
+ HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/next_motif.gif"></A> 
+<A NAME="tex2html70"
+ HREF="node3.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/up_motif.gif"></A> 
+<A NAME="tex2html64"
+ HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html73"
+ HREF="node6.html">Other B+ Tree Classes</A>
+<B> Up:</B> <A NAME="tex2html71"
+ HREF="node3.html">Design Overview</A>
+<B> Previous:</B> <A NAME="tex2html65"
+ HREF="node4.html">A Note on Keys</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Qingqing Ouyang</I>
+<BR><I>12/11/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,388 @@
+\documentstyle[psfig]{article}
+
+\include{psfig}
+
+\addtolength{\oddsidemargin}{-0.75in}
+\setlength{\textwidth}{6.25in}
+
+
+\font\bigheadfont=cmss12 at 12truept
+\font\medheadfont=cmss10 at 10truept
+\font\smallheadfont=cmssq8 at 8truept
+
+\def\uwhead{{
+\bigheadfont\centerline{UNIVERSITY OF WISCONSIN--MADISON}
+\medheadfont\baselineskip=.43cm\centerline{COMPUTER SCIENCES DEPARTMENT}
+\vskip.15cm
+\centerline{CS 564:  DATABASE MANAGEMENT SYSTEMS}
+\bigheadfont\baselineskip=1.2em \vskip.25cm
+\centerline{Assignment 1:  Buffer Manager }
+\centerline{Due: September 27, 1996}
+\medheadfont \vskip .2cm
+\centerline{Instructors:  Jeff Naughton and Raghu Ramakrishnan}
+\vskip .2cm}}
+
+\def\endash{{\the\textfont0--}} %% Need these because PostScript fonts do not
+\def\emdash{{\the\textfont0---}}%% make these dashes join together.
+
+\renewcommand{\baselinestretch}{1.2}
+
+\begin{document}
+
+\uwhead
+
+\section{Introduction}
+
+In this assignment,
+you will  implement a simplified version of the Buffer Manager layer,
+without support for concurrency control or recovery.   You will be given 
+the code for the lower layer, the Disk  Space Manager.
+
+{\em You will carry out this assignment, and subsequent ones, in teams
+of two.  Please choose a partner as soon  as possible, or send mail to
+xbao or cychan so that we can find a partner for you.}
+
+You should begin by reading the chapter  on Disks and Files,  
+to get an overview of buffer management.
+This  material will also be covered in class.  In addition,  HTML
+documentation is available for  Minibase,  which  you can read using
+Netscape.  There is a link to the Minibase home page in the CS564 home
+page.  In particular, you should read the description of the DB class,
+which you will call extensively in this assignment.  The Java documentation
+for the {\em diskmgr} package can be found at 
+~javaminibase/javamini\_hwk/handout/BufMgr/javadoc/packages.html.
+You should also read the code under diskmgr/ carefully to learn
+how package is declared and how Exceptions are handled in Minibase.
+
+\section{The Buffer Manager Interface}
+
+The simplified Buffer Manager interface that you will 
+implement in this assignment
+allows a client (a higher level program that calls the Buffer Manager) to
+allocate/de-allocate pages on disk, to bring a disk page into the buffer pool
+and pin it, and to unpin a page in the buffer pool.  
+
+
+The methods that you have to implement are described below:
+
+\begin{verbatim}
+
+public class BufMgr {
+
+  /**
+   * Create the BufMgr object.
+   * Allocate pages (frames) for the buffer pool in main memory and
+   * make the buffer manage aware that the replacement policy is
+   * specified by replacerArg (i.e. Clock, LRU, MRU etc.).
+   *
+   * @param numbufs number of buffers in the buffer pool.
+   * @param replacerArg name of the buffer replacement policy.
+   */
+
+  public BufMgr(int numbufs, String replacerArg) {};
+
+
+  /** 
+   * Pin a page.
+   * First check if this page is already in the buffer pool.  
+   * If it is, increment the pin_count and return a pointer to this 
+   * page.  If the pin_count was 0 before the call, the page was a 
+   * replacement candidate, but is no longer a candidate.
+   * If the page is not in the pool, choose a frame (from the 
+   * set of replacement candidates) to hold this page, read the 
+   * page (using the appropriate method from {\em diskmgr} package) and pin it.
+   * Also, must write out the old page in chosen frame if it is dirty 
+   * before reading new page.  (You can assume that emptyPage==false for
+   * this assignment.)
+   *
+   * @param Page_Id_in_a_DB page number in the minibase.
+   * @param page the pointer poit to the page.
+   * @param emptyPage true (empty page); false (non-empty page)
+   */
+
+  public void pinPage(PageId pin_pgid, Page page, boolean emptyPage) {};
+
+
+  /**
+   * Unpin a page specified by a pageId.
+   * This method should be called with dirty==true if the client has
+   * modified the page.  If so, this call should set the dirty bit 
+   * for this frame.  Further, if pin_count>0, this method should 
+   * decrement it. If pin_count=0 before this call, throw an exception
+   * to report error.  (For testing purposes, we ask you to throw
+   * an exception named PageUnpinnedException in case of error.)
+   *
+   * @param globalPageId_in_a_DB page number in the minibase.
+   * @param dirty the dirty bit of the frame
+   */
+
+  public void unpinPage(PageId PageId_in_a_DB, boolean dirty) {};
+
+
+  /** 
+   * Allocate new pages.
+   * Call DB object to allocate a run of new pages and 
+   * find a frame in the buffer pool for the first page
+   * and pin it. (This call allows a client of the Buffer Manager
+   * to allocate pages on disk.) If buffer is full, i.e., you 
+   * can't find a frame for the first page, ask DB to deallocate 
+   * all these pages, and return null.
+   *
+   * @param firstpage the address of the first page.
+   * @param howmany total number of allocated new pages.
+   *
+   * @return the first page id of the new pages.  null, if error.
+   */
+
+  public PageId newPage(Page firstpage, int howmany) {};
+
+		
+  /**
+   * This method should be called to delete a page that is on disk.
+   * This routine must call the method in diskmgr package to 
+   * deallocate the page. 
+   *
+   * @param globalPageId the page number in the data base.
+   */
+
+  public void freePage(PageId globalPageId) {};
+
+
+  /**
+   * Used to flush a particular page of the buffer pool to disk.
+   * This method calls the write_page method of the diskmgr package.
+   *
+   * @param pageid the page number in the database.
+   */
+
+  public void flushPage(PageId pageid) {};
+
+};
+
+\end{verbatim}
+
+
+\section{Internal Design}
+
+The {\em buffer pool} is a collection of {\em frames} (page-sized 
+sequence of main memory bytes) that is managed by the Buffer Manager.
+Conceptually, it should be stored as an array bufPool[numbuf] of 
+Page objects.  However, due to the limitation of Java language, it
+is not feasible to declare an array of Page objects and later on 
+writing string (or other primitive values) to the defined Page.
+To get around the problem, we have defined our Page as an array of 
+bytes and deal with buffer pool at the byte array level.  Therefore, 
+when implement your constructor for the BufMgr class, you should declare
+the buffer pool as {\em bufpool[numbuf][page\_size]}.  Note that the
+size of minibase pages is defined in the interface {\em GlobalConst} of
+the {\em global} package.  Before jump into coding, please make sure
+that you understand how Page object is defined and manipulated in Java
+minibase.
+
+
+In addition, you should maintain an array bufDescr[numbuf] of 
+{\em descriptors}, one per frame.  Each descriptor is a record with 
+the following fields:
+\begin{quote}
+{\em page number, pin\_count, dirtybit}.
+\end{quote}
+The {\em pin\_count} field is an
+integer, {\em page number} is a PageId object, and {\em dirtybit}  
+is a boolean. This describes the page that is stored in the corresponding frame.
+A page is identified by
+a {\em page number} that is
+generated by the DB class when the page is allocated, and is unique over all
+pages in the database. 
+The PageId type is defined as an integer type in minirel.h.
+
+A simple {\em hash table} should be used to figure out 
+what frame a given disk page occupies.  
+The hash table should be implemented (entirely in main memory)
+by using an array of pointers to lists of
+$\langle$ {\em page number, frame number} $\rangle$ pairs.  
+The array is called the {\em directory} and each list of
+pairs is called a {\em bucket}.  Given a {\em page number}, you
+should apply a {\em hash function} to find the directory entry
+pointing to the bucket that contains the frame number for this page, if the
+page is in the buffer pool.  If you search the bucket and don't find
+a pair containing this page number, the page is not in the pool.
+If you find such a pair, it will tell you the frame in which the page
+resides.  This is illustrated in Figure \ref{assign1fig}.
+
+\begin{figure}
+\centerline{\psfig{figure=assign1fig.eps}}
+\caption{Hash Table}\label{assign1fig}
+\end{figure}
+
+The hash function
+must distribute values in the domain of the search field
+uniformly over the collection of buckets.
+If we have HTSIZE buckets, numbered 0 through M-1, a hash
+function $h$ of the form $h(value)~=~(a*value+b)~mod~HTSIZE$
+works well in practice.  HTSIZE should be chosen to be a prime number.
+
+When a page is requested the buffer manager should do the following:
+\begin{enumerate}
+\item
+Check the buffer pool (by using the hash table) to see if it contains the requested page.
+If the page is not in the pool, it should be brought in as follows:
+\begin{enumerate}
+\item
+Choose a frame for replacement,
+using the Clock replacement policy.
+\item
+If the frame chosen for replacement is dirty, 
+{\em flush} it (i.e., write out the page that it contains to disk,
+using the appropriate DB class method).
+\item
+Read the requested page (again, by calling the DB class) into the frame chosen for replacement; the 
+{\em pin\_count} and {\em dirtybit} for the frame
+should be initialized to 0 and FALSE, respectively.
+\item
+Delete the entry for the old page from the Buffer Manager's hash table and insert
+an entry for the new page.
+Also, update the entry for this frame in the bufDescr array to reflect these changes.
+\end{enumerate}
+\item
+{\em Pin} the requested page by incrementing the {\em pin\_count} in the descriptor
+for this frame.
+and return a pointer to the page to the requestor.  
+\end{enumerate}
+
+To implement the Clock replacement policy, maintain a 
+queue of frame numbers.
+When a frame is to be chosen for replacement, you should pick the first frame 
+in this list.
+A frame number is added to the end of the queue when the {\em pin\_count} for
+the frame is decremented to 0.
+A frame number is removed from the queue if the {\em pin\_count} becomes
+non-zero:  this could happen if there is a request for the page currently in
+the frame!
+
+
+\section{Where to Find Makefiles, Code, etc.}
+
+
+Please copy all the files from $\sim$cs564-1/fall96/proj1/src
+into your own local directory. The contents are:
+
+\begin{itemize}
+\item under {\em bufmgr} directory \\
+        You should have all your code for {\em bufmgr} package implemented
+        under this directory.  We provide a sample {\em Makefile} to compile 
+        your project. You will have to set up any dependencies by editing 
+        this file.
+	You can also design your own Makefile.  Whatever you do, please
+        make sure that the classpath is set to the one provided in
+        the original Makefile.
+
+\item under {\em diskmgr} direcotry \\
+        You should study the code for {\em diskmgr} package carefully before
+        you implement the {\em bufmgr} package.  The detailed description
+        of the files are not included.  Please refer to the java documentation
+        of the packages.
+
+\item under {\em tests} directory \\
+	{\em Makefile}, {\em TestDriver.java}, {\em BMTest.java}: 
+	Buffer manager test driver program.  Note that you do have to
+        use the Makefile to run your tests too.
+\end{itemize}
+
+You can find other useful information by reading the java documentation
+on other packages, such as the {\em global} package and the 
+{\em chainexception} package.
+
+\section{Error Protocol}
+
+Though the Throwable class in Java contains a snapshot of the execution 
+stack of its thread at the time it was created and also a message
+string that gives more information about the error (exception), we have
+decided to maintain a copy of our own stack to have more control over
+the error handling.
+
+We provide the {\em chainexception} package to handle the Minibase 
+exception stack.  Every exception created in your {\em bufmgr} package
+should extend the ChainException class.  The exceptions are thrown
+according to the following rule:
+
+\begin{itemize}
+
+\item Error caused by an exception caused by another layer: \\
+
+\begin{verbatim}
+
+  For example: (when try to pin page from diskmgr layer)
+
+    try {
+      SystemDefs.JavabaseBM.pinPage(pageId, page, true);
+    }
+    catch (Exception e) {
+      throw new DiskMgrException(e, "DB.java: pinPage() failed");
+    }
+
+
+\end{verbatim}
+
+
+\item Error not caused by exceptions of others, but needs to be
+      acknowledged.
+
+\begin{verbatim}
+
+  For example: (when try to unpin a page that is not pinned)
+
+        if (pin_count == 0) {
+          throw new PageUnpinnedException (null, "BUFMGR: PAGE_NOT_PINNED.");
+        }
+
+\end{verbatim}
+\end{itemize}
+
+
+Basically, the ChainException class keeps track of all the exceptions 
+thrown accross the different layers.  Any exceptions that you decide
+to throw in your {\em bufmgr} package should extend the ChainException
+class. \\
+
+For testing purposes, we ask you to throw the following exceptions
+in case of error (use the exact same name, please):
+\begin{itemize}
+\item BufferPoolExceededException \\
+      Throw a BufferPoolExceededException when try to pin
+      a page to the buffer pool with no unpinned frame left.
+
+\item PagePinnedException \\
+      Throw a PagePinnedException when try to free a page that
+      is still pinned.
+      
+\item HashEntryNotFoundException \\
+      Throw a HashEntryNotFoundException when page specified by
+      PageId is not found in the buffer pool.
+\end{itemize}
+
+Feel free to throw other new exceptions as you see fit.  But make 
+sure that you follow the error protocol when you catch an exception.  
+Also, think carefully about what else you need to do in the 
+{\em catch} phase. Sometimes you do need to unroll the previous 
+operations when failure happens.
+
+\section{What to Turn In, and When}
+
+You should turn  in copies of your code together with  copies of the
+output produced   by running  the  tests  provided  by the   TAs.  The
+assignment is due at 5PM on September 27th.  The solution will be made
+public after that time,  and solutions turned in  after that time will
+not receive any credit.  So be sure to turn in whatever you have, even
+if it is not working fully, at that time.
+
+{\em I emphasize  that late submissions  will not receive  any credit.
+Computers\emdash     and life!\emdash  being   what   they are, expect
+everything  to  take  longer   than  you   expect, even    taking this
+expectation into account.  So start  early, and plan on getting things
+done well before the due  date.  Nothing short  of a nuclear explosion
+(in the CS building, not the South Pacific) constitutes a valid reason
+for an extension.
+\end{document}
+
+
+

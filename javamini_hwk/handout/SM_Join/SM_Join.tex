@@ -1,0 +1,110 @@
+\documentstyle[psfig]{article}
+
+\include{psfig}
+
+\addtolength{\oddsidemargin}{-0.75in}
+\setlength{\textwidth}{6.25in}
+
+
+\font\bigheadfont=cmss12 at 12truept
+\font\medheadfont=cmss10 at 10truept
+\font\smallheadfont=cmssq8 at 8truept
+
+\def\uwhead{{
+\bigheadfont\centerline{UNIVERSITY OF WISCONSIN--MADISON}
+\medheadfont\baselineskip=.43cm\centerline{COMPUTER SCIENCES DEPARTMENT}
+\vskip.15cm
+\centerline{CS 564:  DATABASE MANAGEMENT SYSTEMS}
+\bigheadfont\baselineskip=1.2em \vskip.25cm
+\centerline{Assignment 4:  Sort-Merge Join}
+\centerline{Due: September 27, 1996}
+\medheadfont \vskip .2cm
+\centerline{Instructors:  Jeff Naughton and Raghu Ramakrishnan}
+\vskip .2cm}}
+
+\def\endash{{\the\textfont0--}} %% Need these because PostScript fonts do not
+\def\emdash{{\the\textfont0---}}%% make these dashes join together.
+
+\renewcommand{\baselinestretch}{1.2}
+
+\begin{document}
+
+\uwhead
+
+
+\section{Introduction}
+
+In this assignment,
+you will implement the sort-merge join algorithm.
+{\em You will carry out this assignment in teams
+of two with the same partner as for the previous assignments.}
+
+\section{Available Documentation}
+
+You should begin by reading the chapter on 
+{\em Implementation of Relational Operations},
+in particular, the section on {\em Sort-Merge Join}.
+
+The package that contains SortMerge is {\em iterator}.
+You should also read the java documentation carefully for
+the package.  You may find them at : http://path.
+Although there are many classes under the {\em iterator} class,
+you most likely only need a handful of them.  However, you are
+encouraged to go over the rest of the documentation to gain
+an understanding of how things are being done.  It will also  
+help you to get started with your implementation.
+
+\section{What You Have to Implement}
+
+The sortMerge constructor joins two relations R and S,
+represented by the \verb+Iterator+ object {\em am1} and {\em am2}, 
+respectively,
+using the sort-merge join algorithm. \\
+
+Read the \verb+TupleUtils+ class carefully.  You will need to call
+the \verb+setup_op_tuple+ method to set up joined tuple.
+You will also need to call the compare functions to compare the
+join columns of two tuples. \\ 
+You will call the Sort constructor to sort a relation (represented
+by \verb+Iterator+ class).\\
+You will also have to implement the \verb+get_next()+ method that
+returns the next joined tuple. \\
+Note that all the relations are not saved in a heapfile or written
+out to a heapfile.  Instead, you should use the functions provided
+by \verb+IoBuf+ class to operate tuples through a buffer.
+
+\section{Where to Find Makefiles, Code, etc.}
+
+Copy all the files from $\sim$cs564-1/spring96/assign5/src
+into your own local directory.
+The files are:
+\begin{itemize}
+\item
+	{\em Makefile}: A sample makefile to compile your project.
+\item
+	{\em *.class} : A compiled version of functions provided.
+\item
+	{\em tests} : package to test and run the SortMerge program.
+\end{itemize}
+Again, you can find the interfaces for all necessary interfaces
+at http://path
+
+\section{What to Turn In, and When}
+
+You should turn  in copies of  your code  together with  copies of the
+output produced   by running  the  tests  provided  by the   TAs.  The
+assignment is due at 5PM on April 17.  The solution will be made
+public after that time,  and solutions turned in  after that time will
+not receive any credit.  So be sure to turn in whatever you have, even
+if it is not working fully, at that time.
+
+{\em I emphasize  that late submissions  will not receive  any credit.
+Computers\emdash     and life!\emdash  being   what   they are, expect
+everything  to  take  longer   than  you   expect, even    taking this
+expectation into account.  So start  early, and plan on getting things
+done well before the due  date.  Nothing short  of a nuclear explosion
+(in the CS building, not the South Pacific) constitutes a valid reason
+for an extension.
+
+\end{document}
+

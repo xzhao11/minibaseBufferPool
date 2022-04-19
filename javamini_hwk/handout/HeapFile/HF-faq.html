@@ -1,0 +1,277 @@
+<html>
+
+<head>
+<title>CS 564 - Assignment 1 FAQ </title>
+</head>
+
+<body>
+
+<body background="yellow_s.gif">
+
+<CENTER>
+<h1>CS 564 - Assignment 1 FAQ</h1>
+<hr>
+</CENTER>
+
+<b> Note:</B>
+
+<P>Please use the lab supported make in:
+<i>/s/std/bin/make</i>, rather than the version mentioned in the handout.
+The makefile is only a skeleton which you have to modify to suit your
+particular implementation. (You have to setup the dependencies in the Makefile)
+<P>Your heapfile should reject insertion of a record that cannot fit on a page.
+<P>Web pages you should read on heap files: page <A HREF="http://www.cs.wisc.edu/coral/minibase/spaceMgr/doc/report/html/heapfile.html"> 1</A>, <A HREF="http://www.cs.wisc.edu/coral/minibase/spaceMgr/heap_file.html"> 2</A>.
+
+<HR>
+
+<img src="pics/ball-green.gif"> <A href="#empty">
+  What does the function <i>bool HFPage::empty(void);</i>
+  return?</A><P>
+
+<img src="pics/ball-green.gif"> <A href="#avail-space">
+  What does the function <i>int HFPage::available_space(void);</i>
+  return?</A><P>
+
+<img src="pics/ball-green.gif"> <A href="#hf-exists">
+  Using DB::get_file_entry(), how do I know whether the file exists or not?
+  </A><P>
+
+<img src="pics/ball-green.gif"> <A href="#pin-unpin1">
+  Do we have to pin and unpin pages - or does the buffer Mgr do it?</A><P>
+
+<img src="pics/ball-green.gif"> <A href="#pin-unpin2">
+  If the page becomes empty does the buffer manager automatically free it? </A><P>
+
+<img src="pics/ball-green.gif"> <A href="#struct-hdrpg"> 
+  Why is a struct Headerpage provided?</A><P>
+
+<img src="pics/ball-green.gif"> <A href="#dirty-bm"> 
+  Does the buffer manager maintain a dirty bit for a page?</A><P>
+
+<img src="pics/ball-green.gif"> <A href="#heapfile">
+  What are the operations on a heap file?</A><P>
+
+<img src="pics/ball-green.gif"> <a href="#todo">
+  What do I have to do in this assignment?</A><P>
+
+<img src="pics/ball-green.gif"> <a href="#fsm">
+  Is free space management explained some where?</A><P>
+
+<img src="pics/ball-green.gif"> <a href="#scan">
+  What exactly is a scan iterator?</A><P>
+
+<img src="pics/ball-green.gif"> <a href="#db-reg">
+  How do I register a file name with the DB class?</A><P>
+
+<img src="pics/ball-green.gif"> <a href="#bm-newpage">
+  How do I get a new page from the buffer manager?</A><P>
+
+<img src="pics/ball-green.gif"> <a href="#ins-rec">
+  How do I insert a record on a page?</A><P>
+
+
+<img src="pics/ball-green.gif"> <a href="#pdm">
+  What are the private data members in the Class Heapfile?</a><P>
+
+<img src="pics/ball-green.gif"> <a href="#delFile">
+  What is the difference between the destructor and deleteFile in class HeapFile?</a><P>
+
+
+<img src="pics/ball-green.gif"> <a href="#insrec">
+  Does the method insertRecord in class HFPage set the RID (record id) or is that done in class HeapFile?</a><P>
+
+<img src="pics/ball-green.gif"> <a href="#delrec">
+  If deleteRecord in HFPage fails will it return a status value of FAIL or RECNOTFOUND?</a><P>
+
+<hr>
+
+<A name="empty"> <img src="pics/ball-green.gif"> 
+  <B>What does the function <i>bool HFPage::empty(void);</i>
+  return?</B></A><P>
+<blockquote>
+  It returns true if the HFPage is empty, and false otherwise.
+</blockquote>
+
+<A name="avail-space"> <img src="pics/ball-green.gif"> 
+  <B>What does the function <i>int HFPage::available_space(void);</i>
+  return?</B></A><P>
+<blockquote>
+  It returns the size of the largest record which can be added to the page.
+</blockquote>
+
+<A name="hf-exists"> <img src="pics/ball-green.gif"> 
+  <B>What is <i>enum{TEMP, ORDINARY} FileType</i> for?</B></A><P>
+<blockquote>
+</blockquote>
+
+<A name="hf-exists"> <img src="pics/ball-green.gif"> 
+  <B>Using DB::get_file_entry(), how do I know whether the file exists or not?
+  </B></A><P>
+<blockquote>
+Here is how you find out if a file exists or not...
+<PRE>
+status = db->get_file_entry(name, headerPageNo);
+if (status != OK)
+        // file doesn't exist. First create it.
+else
+        // Open existing file
+</PRE>
+</blockquote>
+
+
+<A name="pin-unpin1"> <img src="pics/ball-green.gif"> 
+  <B>Do we have to pin and unpin pages, or does the buffer Mgr do it?</B></A><P>
+<blockquote>
+  You have to pin a page before you read it.
+</blockquote>
+
+<A name="pin-unpin2"> <img src="pics/ball-green.gif"> 
+  <B>If the page becomes empty does the BR automatically do the
+  freeing?</B> </A><P>
+<blockquote>
+  The buffer manager does not know anything about records on a page.
+</blockquote>
+
+<A name="struct-hdrpg"> <img src="pics/ball-green.gif"> 
+  <B>Why is a struct Headerpage provided?</B></A><P> 
+<blockquote>
+The struct header page is to be modified by you to reflect information that you 
+want to store on the header page. The struct can then be dumped (copied)
+on to a page to store the information. When you open a heapfile, you just 
+fill in the members of this structure initially, so that you don't have to
+decode this information from the header page repeatedly.
+</blockquote>
+
+<A name="dirty-bm"> 
+<img src="pics/ball-green.gif"> 
+  <B>Does the buffer manager maintain a dirty bit for a page? </B></A><P>
+<blockquote>
+Dirty flags are maintained by you. You pass in TRUE or FALSE (defined in
+ ~cs564-1/assigns95/include/da_types.h) depending on whether the page is
+dirty or not.
+</blockquote>
+
+<A NAME="heapfile">
+<img src="pics/ball-green.gif">
+<B> What are the operations on a heap file?</B></A><P>
+<blockquote>
+
+A heap file is  an unordered set  of records. The following operations
+are supported:
+<OL>
+<LI>  Heap files can be   created  and destroyed.
+<LI> Existing heapfiles  can   be opened  and closed.
+<LI>  Records  can be inserted  and  deleted.
+<LI>  Each record is  uniquely  identified  by a  record  id  (rid). A
+      specific record can be retrieved by using the record id.
+</OL>
+</blockquote>
+
+
+<A name="todo">
+<img src="pics/ball-green.gif"> <b>What do I have to do?</b></A><P>
+<blockquote>
+There are two main pieces of code to be written:
+<OL>
+<LI> The free space manager. You must deal with free space intelligently,
+     using a directory based structure (recommended) to identify pages
+     with room for records. Then, these free spaces in pages should be
+     utilized when insertions are performed.
+<LI> Implement the class <i> scan </i> which performs a scan on the
+     heap file.
+</OL>
+</blockquote>
+
+
+<A name="fsm">
+<img src="pics/ball-green.gif"> 
+  <b>Is free space management explained some where?</b></A><P>
+
+<blockquote>
+Yes, look in Chapter 3 of the book (available in DoIT)<P>
+</blockquote>
+
+
+<A name="scan">
+<img src="pics/ball-green.gif"> 
+  <b>What exactly is a scan iterator?</b></A><P>
+<blockquote>
+A  scan iterator supports  a   simple <i>  get_next() </i>  interface.
+Successive calls to the get_next() function returns successive elements
+in the heap file. You have to maintain state information in the scan
+class in order to achieve this effect.
+</blockquote>
+
+<A name="dll">
+<img src="pics/ball-green.gif"> 
+  <b>What kind of implementation is recommended?</B></A><P>
+<blockquote>
+We recommend using the doubly linked list implementation for free space
+management, since there is support for it in the <b><i>hfpage</i></b>
+class. However, you are welcome to try the directory based implementation.
+
+</blockquote>
+
+<a name="db-reg">
+<img src="pics/ball-green.gif">
+  <B>How do I register a file name with the DB class?</B></A><P>
+<PRE>
+        status = db->add_file_entry(name, headerPageNo);
+</PRE>
+
+
+<a name="bm-newpage">
+<img src="pics/ball-green.gif">
+  <B>How do I get a new page from the buffer manager?</B></A><P>
+<PRE>
+        status = bm->newPage(headerPageNo, pagePtr);
+</PRE>
+
+
+<a name="ins-rec">
+<img src="pics/ball-green.gif">
+  <B>How do I insert a record on a page?</B></A><P>
+<PRE>
+        status   = bm->pinPage(lastPageNo, pgptr);
+        lastPage = (HFPage *) pgptr;
+        status   = lastPage->insertRecord(recPtr, recLen, rid);
+</PRE>
+
+<a name="pdm"> <img src="pics/ball-green.gif">
+  <B>What are the private data members in the Class Heapfile?</B></a><P>
+<blockquote>
+The private data members in the heapfile are part of your implementation.
+The above were remanents of a previous implementation. They have been taken out
+now.
+</blockquote>
+
+<a name="delFile"> <img src="pics/ball-green.gif"> 
+  <b>What is the difference between the destructor and deleteFile in class HeapFile?</B></a><P>
+<blockquote>
+<i>deleteFile</i> - Wipes out the heapfile from the database permanently.
+The earlier version of heapfile had an implementation for temporary
+heap files. The destructor would basically call deleteFile to delete
+the temporary file. The destructor should also unpin the header page.
+</blockquote>
+
+<a name="insrec"> <img src="pics/ball-green.gif"> 
+  <B>Does the method insertRecord in class HFPage set the RID (record id) or is that done in class HeapFile?</b></a><P>
+<blockquote>
+It is passed by reference into insertRecord(), and insertRecord()
+modifies the rid.
+</blockquote>
+
+<a name="delrec"> <img src="pics/ball-green.gif"> 
+  <B>If deleteRecord in HFPage fails will it return a status value of FAIL or RECNOTFOUND?</B></a><P>
+<blockquote>
+Neither. If it fails, it returns - DBMGR (of type Status)
+</blockquote>
+
+<hr>
+
+<P>
+Back to the cs564 <A HREF="http://www.cs.wisc.edu/~cs564-1"> home page</A>
+
+
+</body>
+</html>

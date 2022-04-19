@@ -1,0 +1,72 @@
+%!PS-Adobe-2.0 EPSF-2.0
+%%Title: /tmp/xfig-fig024166
+%%Creator: fig2dev Version 2.1.8 Patchlevel 0
+%%CreationDate: Wed Oct 11 12:07:00 1995
+%%For: michaell@coyote (Michael Lee,3360,2629275,2562065)
+%%Orientation: Portrait
+%%BoundingBox: 0 0 257 122
+%%Pages: 0
+%%EndComments
+/$F2psDict 200 dict def 
+$F2psDict begin
+$F2psDict /mtrx matrix put
+/l {lineto} bind def
+/m {moveto} bind def
+/s {stroke} bind def
+/n {newpath} bind def
+/gs {gsave} bind def
+/gr {grestore} bind def
+/clp {closepath} bind def
+/graycol {dup dup currentrgbcolor 4 -2 roll mul 4 -2 roll mul
+4 -2 roll mul setrgbcolor} bind def
+/col-1 {} def
+/col0 {0 0 0 setrgbcolor} bind def
+/col1 {0 0 1 setrgbcolor} bind def
+/col2 {0 1 0 setrgbcolor} bind def
+/col3 {0 1 1 setrgbcolor} bind def
+/col4 {1 0 0 setrgbcolor} bind def
+/col5 {1 0 1 setrgbcolor} bind def
+/col6 {1 1 0 setrgbcolor} bind def
+/col7 {1 1 1 setrgbcolor} bind def
+/col8 {.68 .85 .9 setrgbcolor} bind def
+/col9 {0 .39 0 setrgbcolor} bind def
+/col10 {.65 .17 .17 setrgbcolor} bind def
+/col11 {1 .51 0 setrgbcolor} bind def
+/col12 {.63 .13 .94 setrgbcolor} bind def
+/col13 {1 .75 .8 setrgbcolor} bind def
+/col14 {.7 .13 .13 setrgbcolor} bind def
+/col15 {1 .84 0 setrgbcolor} bind def
+	end
+/$F2psBegin {$F2psDict begin /$F2psEnteredState save def} def
+/$F2psEnd {$F2psEnteredState restore end} def
+%%EndProlog
+
+$F2psBegin
+0 setlinecap 0 setlinejoin
+-49.0 180.0 translate 0.900 -0.900 scale
+0.500 setlinewidth
+% Polyline
+n 154 199 m 154 64 l  54 64 l  54 199 l  clp gs col-1 s gr
+% Polyline
+n 154 124 m 154 104 l  54 104 l  54 124 l  clp gs col-1 s gr
+% Polyline
+n 339 199 m 339 64 l  239 64 l  239 199 l  clp gs col-1 s gr
+% Polyline
+n 154 114 m 239 114 l gs col-1 s gr
+n 229.000 111.500 m 239.000 114.000 l 229.000 116.500 l gs 2 setlinejoin col-1 s gr
+/Times-Roman findfont 12.00 scalefont setfont
+59 94 m 
+gs 1 -1 scale (Type) col-1 show gr
+/Times-Roman findfont 12.00 scalefont setfont
+64 114 m 
+gs 1 -1 scale (Root Page) col-1 show gr
+/Times-Roman findfont 20.00 scalefont setfont
+84 179 m 
+gs 1 -1 scale (Page) col-1 show gr
+/Times-Roman findfont 20.00 scalefont setfont
+74 159 m 
+gs 1 -1 scale (Header) col-1 show gr
+/Times-Roman findfont 20.00 scalefont setfont
+259 134 m 
+gs 1 -1 scale (BTLeaf) col-1 show gr
+$F2psEnd

@@ -1,0 +1,114 @@
+
+<HTML>
+<HEAD>
+<TITLE>Heap File Assignment</TITLE>
+</HEAD>
+
+<CENTER>
+<H2>UNIVERSITY OF WISCONSIN--MADISON</H2>
+<H3>COMPUTER SCIENCES DEPARTMENT</H3>
+<P>
+<H3><B>CS 564:  DATABASE MANAGEMENT SYSTEMS</B></H3>
+<P>
+Assignment 1:  Heap Files<BR>
+Due: Wednesday, September 27, 1996, at 5 p.m.<BR>
+Instructors:  Jeff Naughton and Raghu Ramakrishnan<BR>
+</CENTER>
+
+<P>
+<H3>Introduction</H3>
+<P>
+Welcome to Minibase, a new version of the Minirel system that has been
+used in the CS564 course project for many years.   Minibase is a small
+relational DBMS, structured  into several layers.  In this assignment,
+you will  implement the Heap file layer.   You will  be given the code
+for the lower layers (Buffer Manager and Disk  Space Manager), as well
+as the code for managing records on a Heap file page.
+<P>
+<I>You will carry out this assignment, and subsequent ones, in teams
+of two.  Please choose a partner as soon  as possible, or send mail to
+michaell so that we can find a partner for you.</I>
+<P>
+This assignment has three parts.  You have to do the following:
+<OL>
+<LI>
+Familiarize  yourself with the  Heap  file, HFPage, Buffer Manager and
+Disk Space Manager interfaces.
+<LI>
+Implement the Heap file class.  You can ignore concurrency control and
+recovery issues,   and  concentrate   on implementing  the   interface
+routines.  You should deal with free space intelligently, using either
+a  linked  list or  page  directory to   identify pages  with room for
+records.  When  a record is deleted,  you must update your information
+about available  free space, and when a  record is inserted,  you must
+try to use free space on existing pages before allocating a new page.
+<LI>
+Run the tests provided by the TA.
+</OL>
+<P>
+<H4>Available Documentation</H4>
+<P>
+You should begin by reading the chapter  on Disks and Files (available
+at MACC),  to get an overview of  the HF layer  and buffer management.
+This  material  was   also  covered in    class.    In addition,  HTML
+documentation   is available for  Minibase,  which  you can read using
+Netscape.  There is a link to the Minibase home page in the CS564 home
+page.
+<P>
+<H3>Classes to Familiarize Yourself With First</H3>
+<P>
+There are four main classes with which you should
+familiarize yourself: HeapFile, HFPage, BufferMgr, DB.
+A Heap file is seen as a collection of records.  Internally,
+records are stored on a collection of HFPage objects.
+The code for all these classes will be given to you, with the
+exception of HeapFile of course.
+<P>
+<H3>Compiling Your Code and Running the Tests</H3>
+<P>
+Copy all the files  from <I>/p/course/cs564-1/assigns95/assign1</I> to
+your own local assign1 directory  and study them carefully.  The files
+are:
+<P>
+<UL>
+<LI>
+<I>Makefile:</I>  A sample Makefile  for  you to compile  your project.
+Study this carefully before you make changes.  You will notice that in
+order  to compile your code, you  will have to link in the
+library for the  buffer manager, the disk space manager and the record
+manager  <I>/p/course/cs564-1/assigns95/libs/lib1.a</I>).  You need not
+copy this to your directory.  The Makefile automatically compiles your
+files and links in this library.  <I>You  should use the gnu version
+of `make', which is in</I> <TT>/usr/psup/bin</TT>.
+<P>
+<LI>
+There are several header files, the ones you have to look at are:
+<OL>
+<LI> <I>heapfile.h</I> -- heapfile class
+<LI> <I>hfpage.h</I> -- hfpage class (a page of the heapfile)
+<LI> <I>buf.h</I> -- buffer manager class
+<LI> <I>db.h</I> -- the db class
+<LI> <I>new_error.h</I> -- the error protocol.
+</OL>
+</UL>
+<P>
+<H3>What to Turn In, and When</H3>
+<P>
+You should turn  in copies of  your code  together with  copies of the
+output produced   by running  the  tests  provided  by the   TAs.  The
+assignment is due at 5PM on September 27th.  The solution will be made
+public after that time,  and solutions turned in  after that time will
+not receive any credit.  So be sure to turn in whatever you have, even
+if it is not working fully, at that time.
+<P>
+<I>I emphasize  that late submissions  will not receive  any credit.
+Computers --  and life! --  being   what   they are, expect
+everything  to  take  longer   than  you   expect, even    taking this
+expectation into account.  So start  early, and plan on getting things
+done well before the due  date.  Nothing short  of a nuclear explosion
+(in the CS building, not the South Pacific) constitutes a valid reason
+for an extension.</I>
+<P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>BTreeFile</TITLE>
+<META NAME="description" CONTENT="BTreeFile">
+<META NAME="keywords" CONTENT="BTree">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="BTree.css">
+<LINK REL="next" HREF="node9.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="node6.html">
+<LINK REL="next" HREF="node9.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html103"
+ HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/next_motif.gif"></A> 
+<A NAME="tex2html101"
+ HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/up_motif.gif"></A> 
+<A NAME="tex2html95"
+ HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html104"
+ HREF="node9.html">BTreeFileScan</A>
+<B> Up:</B> <A NAME="tex2html102"
+ HREF="node6.html">Other B+ Tree Classes</A>
+<B> Previous:</B> <A NAME="tex2html96"
+ HREF="node7.html">IndexFile and IndexFileScan</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H3><A NAME="SECTION00033200000000000000">
+BTreeFile</A>
+</H3>
+<P>
+The main class to be implemented for this assignment is BTreeFile.  
+BTreeFile is a derived class of the IndexFile class, which means 
+a BTreeFile is a
+kind of IndexFile.  However, since IndexFile is only an abstract class
+<EM>all</EM> of the methods associated with IndexFile must be implemented
+for BTreeFile.
+<P>
+The methods to be implemented are described under the <EM>btree</EM>
+package of the given java documenation.  Specifically, you will be
+responsible to provide code for the following classes:
+<P><UL>
+<LI> BTreeFile class
+<BR>
+<P><UL>
+<LI> constructor <BR>
+There are two constructors for BTreeFile: one that will only
+open an index, and the other that will create a new index on
+disk, with a given type and key size.  You can pass 0 for the
+fourth parameter in the second constructor of BTreeFile because
+it is not within the scope of this assignment.
+If a page overflows (i.e., no space for the new entry), 
+you should split the page. 
+You may have to insert additional entries of the form
+<IMG WIDTH="9" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.gif"
+ ALT="$\langle$">key, id of child page<IMG WIDTH="9" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.gif"
+ ALT="$\rangle$"> into the higher level
+index pages as part of a split.
+Note that this could recursively go all the way up to the root, possibly
+resulting in a split of the root node of the B+ tree. <BR>
+<LI> <code>insert</code> method <BR>
+If a page overflows (i.e., no space for the new entry),
+you should split the page.
+You may have to insert additional entries of the form
+<IMG WIDTH="9" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.gif"
+ ALT="$\langle$">key, id of child page<IMG WIDTH="9" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.gif"
+ ALT="$\rangle$"> into the higher level
+index pages as part of a split.
+Note that this could recursively go all the way up to the root, possibly
+resulting in a split of the root node of the B+ tree.
+<LI> <code>Delete</code> method <BR>
+The Delete method simply
+removes the entry from the appropriate BTLeafPage.  You are not required
+to implement redistribution or
+page merging when the number of entries falls below threshold.
+</UL>
+<LI> BTIndexPage class <BR>
+See the explanation in previous sections.
+<LI> BTLeafPage class <BR>
+See the explanation in previous sections.
+</UL>
+<P>
+Note that the java documentation provided to you for methods in
+<code>BTreeFile</code>,  
+<code>BTIndexPage</code>, and 
+<code>BTLeafPage</code>,  
+do not specify whether they throw any exceptions; or rather,
+what exceptions that they throw.  You should follow the error
+protocol defined as before to implement your methods with
+reasonable exceptions thrown.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html103"
+ HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/next_motif.gif"></A> 
+<A NAME="tex2html101"
+ HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/up_motif.gif"></A> 
+<A NAME="tex2html95"
+ HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html104"
+ HREF="node9.html">BTreeFileScan</A>
+<B> Up:</B> <A NAME="tex2html102"
+ HREF="node6.html">Other B+ Tree Classes</A>
+<B> Previous:</B> <A NAME="tex2html96"
+ HREF="node7.html">IndexFile and IndexFileScan</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Qingqing Ouyang</I>
+<BR><I>12/11/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

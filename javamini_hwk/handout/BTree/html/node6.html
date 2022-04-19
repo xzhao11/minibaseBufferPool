@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Other B+ Tree Classes</TITLE>
+<META NAME="description" CONTENT="Other B+ Tree Classes">
+<META NAME="keywords" CONTENT="BTree">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="BTree.css">
+<LINK REL="previous" HREF="node5.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node7.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html80"
+ HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/next_motif.gif"></A> 
+<A NAME="tex2html78"
+ HREF="node3.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/up_motif.gif"></A> 
+<A NAME="tex2html74"
+ HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html81"
+ HREF="node7.html">IndexFile and IndexFileScan</A>
+<B> Up:</B> <A NAME="tex2html79"
+ HREF="node3.html">Design Overview</A>
+<B> Previous:</B> <A NAME="tex2html75"
+ HREF="node5.html">B+ Tree Page-Level Classes</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00033000000000000000">
+Other B+ Tree Classes</A>
+</H2>
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="120">&#160;</A>
+<TABLE>
+<CAPTION><STRONG>Figure 2:</STRONG>
+Layout of a BTree with one BTLeafPage<A NAME="fig:btreeone">&#160;</A></CAPTION>
+<TR><TD></TD></TR>
+</TABLE>
+</DIV>
+<BR>
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="123">&#160;</A>
+<TABLE>
+<CAPTION><STRONG>Figure 3:</STRONG>
+Layout of a BTree with more than one BTLeafPage<A NAME="fig:btreetwo">&#160;</A></CAPTION>
+<TR><TD></TD></TR>
+</TABLE>
+</DIV>
+<BR>
+<P>
+We will assume here that everyone understands the concept of B+ trees, and the
+basic algorithms, and concentrate on explaining the design of the
+C++ classes that you will implement.
+<P>
+A BTreeFile will contain a header page and a number of BTIndexPages and
+BTLeafPages.  The header page is used to hold information about the
+tree as a whole, such as the page id of the root page, the type of
+the search key, the length of the key field(s) ( which has a fexed maximum 
+size in this assignment), etc.
+When a B+ tree index is opened, you should read the header page first,
+and keep it pinned until the file is closed.
+Given the name of the B+ tree index file, how can you locate the header
+page?  The DB class (in <EM>diskmgr</EM> package) has a method
+<PRE>
+public void add_file_entry(String fname, PageId start_page_num);
+</PRE>
+that lets you register this information when a file fname is created.
+There are methods for deleting and reading these `file entries'
+(<IMG WIDTH="9" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.gif"
+ ALT="$\langle$">file name, header page<IMG WIDTH="9" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.gif"
+ ALT="$\rangle$"> pairs) as well,
+which can be used when the file is destroyed or opened.
+The header page contains the page id of the root of the tree, and
+every other page in the tree is accessed through the root page.
+<P>
+Figure 2 shows what a BTreeFile with only one
+BTLeafPage looks like; the single leaf page is also the root.  
+Note that there <EM>is no</EM> BTIndexPage in this
+case.  Figure 3 shows a tree with a few
+BTLeafPages, and this can easily be extended to contain multiple
+levels of BTIndexPages as well.
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS">&#160;</A>
+<UL>
+<LI><A NAME="tex2html82"
+ HREF="node7.html#SECTION00033100000000000000">
+IndexFile and IndexFileScan</A>
+<LI><A NAME="tex2html83"
+ HREF="node8.html#SECTION00033200000000000000">
+BTreeFile</A>
+<LI><A NAME="tex2html84"
+ HREF="node9.html#SECTION00033300000000000000">
+BTreeFileScan</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html80"
+ HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/next_motif.gif"></A> 
+<A NAME="tex2html78"
+ HREF="node3.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/up_motif.gif"></A> 
+<A NAME="tex2html74"
+ HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html81"
+ HREF="node7.html">IndexFile and IndexFileScan</A>
+<B> Up:</B> <A NAME="tex2html79"
+ HREF="node3.html">Design Overview</A>
+<B> Previous:</B> <A NAME="tex2html75"
+ HREF="node5.html">B+ Tree Page-Level Classes</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Qingqing Ouyang</I>
+<BR><I>12/11/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

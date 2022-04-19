@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Introduction</TITLE>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="BTree">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="BTree.css">
+<LINK REL="next" HREF="node2.html">
+<LINK REL="previous" HREF="BTree.html">
+<LINK REL="up" HREF="BTree.html">
+<LINK REL="next" HREF="node2.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html26"
+ HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/next_motif.gif"></A> 
+<A NAME="tex2html24"
+ HREF="BTree.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/up_motif.gif"></A> 
+<A NAME="tex2html18"
+ HREF="BTree.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html27"
+ HREF="node2.html">Getting Started</A>
+<B> Up:</B> <A NAME="tex2html25"
+ HREF="BTree.html">No Title</A>
+<B> Previous:</B> <A NAME="tex2html19"
+ HREF="BTree.html">No Title</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00010000000000000000">
+Introduction</A>
+</H1>
+<P>
+In this assignment, you will implement a
+B+ tree in which leaf level pages contain entries of the form
+<IMG WIDTH="9" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.gif"
+ ALT="$\langle$"><EM>key, rid of a data record</EM><IMG WIDTH="9" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.gif"
+ ALT="$\rangle$"> (Alternative 2
+for data entries, in terms of the textbook.) 
+You must implement the full search and insert
+algorithms as discussed in class.  In particular, your insert routine
+must be capable of dealing with overflows (at any level of the tree)
+by splitting pages; as per the algorithm discussed in class, you
+will not consider re-distribution.  For this assignment, you can
+deal with deletes by simply marking the corresponding leaf entry
+as `deleted'; you do not have to implement merging.
+<P>
+You will be given, among all other necessary packages and classes, 
+HFPage and BTSortedPage.  BTSortedPage is derived from HFPage, and 
+it augments  the
+<code>insertRecord</code>  method  of HFPage by   storing records on the
+HFPage in sorted order by a specified <EM>key</EM> value.
+The key value must be included as the initial part of each
+record, to enable easy comparison of the key value of a new
+record with the key values of existing records on a page.
+The documentation available in the java code documentation is  
+sufficient to understand what operation each function performs.
+<P>
+You need to implement two page-level classes,
+<B>BTIndexPage</B> and <B>BTLeafPage</B>, both of which extends
+BTSortedPage.
+These page classes are used to build the B+ tree index;
+you will write code to create, destroy, open and close a B+ tree index, and
+to open scans that return all data entries (from the leaf pages)
+which satisfy some range selection on the keys.
+<P><EM>You will carry out this assignment in teams of
+two, continuing with the same partner as for the previous assignment.
+If you want to change partners, you must let us know first.</EM>
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html26"
+ HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/next_motif.gif"></A> 
+<A NAME="tex2html24"
+ HREF="BTree.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/up_motif.gif"></A> 
+<A NAME="tex2html18"
+ HREF="BTree.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="http://www.cs.wisc.edu/icons/latex2html/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html27"
+ HREF="node2.html">Getting Started</A>
+<B> Up:</B> <A NAME="tex2html25"
+ HREF="BTree.html">No Title</A>
+<B> Previous:</B> <A NAME="tex2html19"
+ HREF="BTree.html">No Title</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Qingqing Ouyang</I>
+<BR><I>12/11/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

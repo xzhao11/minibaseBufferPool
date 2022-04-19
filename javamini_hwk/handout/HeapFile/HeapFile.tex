@@ -1,0 +1,133 @@
+
+\documentstyle[psfig]{article}
+
+\include{psfig}
+
+\addtolength{\oddsidemargin}{-0.75in}
+\setlength{\textwidth}{6.25in}
+
+
+\font\bigheadfont=cmss12 at 12truept
+\font\medheadfont=cmss10 at 10truept
+\font\smallheadfont=cmssq8 at 8truept
+
+\def\uwhead{{
+\bigheadfont\centerline{UNIVERSITY OF WISCONSIN--MADISON}
+\medheadfont\baselineskip=.43cm\centerline{COMPUTER SCIENCES DEPARTMENT}
+\vskip.15cm
+\centerline{CS 564:  DATABASE MANAGEMENT SYSTEMS}
+\bigheadfont\baselineskip=1.2em \vskip.25cm
+\centerline{Assignment 2:  Heap Files}
+\centerline{Due: September 27, 1996}
+\medheadfont \vskip .2cm
+\centerline{Instructors:  Jeff Naughton and Raghu Ramakrishnan}
+\vskip .2cm}}
+
+\def\endash{{\the\textfont0--}} %% Need these because PostScript fonts do not
+\def\emdash{{\the\textfont0---}}%% make these dashes join together.
+
+\renewcommand{\baselinestretch}{1.2}
+
+\begin{document}
+
+\uwhead
+
+\section{Introduction}
+
+Welcome to Minibase, a new version of the Minirel system that has been
+used in the CS564 course project for many years.   Minibase is a small
+relational DBMS, structured  into several layers.  In this assignment,
+you will  implement the Heap file layer.   You will  be given the documentation
+for the lower layers (Buffer Manager and Disk  Space Manager), as well
+as the documents for managing records on a Heap file page.  You can
+find the package index for the above at \\
+
+http://URL to the package...
+
+{\em You will carry out this assignment, and subsequent ones, in teams
+of two.  Please choose a partner as soon  as possible, or send mail to
+michaell so that we can find a partner for you.}
+
+This assignment has three parts.  You have to do the following:
+\begin{enumerate}
+\item
+Familiarize  yourself with the Heap file, HFPage, Buffer Manager and
+Disk Space Manager interfaces.
+\item
+Implement the Heap file class.  You can ignore concurrency control and
+recovery issues,   and  concentrate   on implementing  the   interface
+routines.  You should deal with free space intelligently, using either
+a  linked  list or  page  directory to   identify pages  with room for
+records.  When  a record is deleted,  you must update your information
+about available  free space, and when a  record is inserted,  you must
+try to use free space on existing pages before allocating a new page.
+\item
+Run the tests provided by the TA.
+\end{enumerate}
+
+\subsection{Available Documentation}
+
+You should begin by reading the chapter  on Disks and Files (available
+at MACC),  to get an overview of  the HF layer and buffer management.
+This  material  was   also  covered in class.    In addition,  HTML
+documentation   is available for  Minibase,  which  you can read using
+Netscape.  There is a link to the Minibase home page in the CS564 home
+page.
+
+\section{Classes to Familiarize Yourself With First}
+
+There are three main packages with which you should
+familiarize yourself: {\em heap, bufmgr, diskmgr}.  Note that
+part of the {\em heap} package contains implementation for
+HFPage.  The java documentation of HFPage is provided to you.
+A Heap file is seen as a collection of records.  Internally,
+records are stored on a collection of HFPage objects.
+
+\section{Compiling Your Code and Running the Tests}
+
+Copy all the files  from {\em /p/course/cs564-1/assigns95/assign1} to
+your own local assign1 directory  and study them carefully.  The files
+are:
+
+\begin {itemize}
+\item
+{\em Makefile:}  A sample Makefile  for  you to compile  your project.
+Study this carefully before you make changes.  Whatever you do, make
+sure that you do not modify the classpath which links your code to
+the packages you may need.
+
+\item
+Again, the java documentation for packpage {\em bufmgr, diskmgr} and
+{\em heap} are online. \\
+{\em Note that you DO NOT have to throw the same exceptions as}
+{\em documented for the heap package.  However, for testing}
+{\em purpose, we DO ask you to name one of your exceptions}
+{\em InvalidUpdateException to signal any illegal operations}
+{\em on the record.  In other error situations, you should} 
+{\em throw exceptions as you see fit following the error protocol}
+{\em introduced in the Buffer Manager Assignment.}
+
+\end{itemize}
+
+\section{What to Turn In, and When}
+
+You should turn  in copies of  your code  together with  copies of the
+output produced   by running  the  tests  provided  by the   TAs.  The
+assignment is due at 5PM on September 27th.  The solution will be made
+public after that time,  and solutions turned in  after that time will
+not receive any credit.  So be sure to turn in whatever you have, even
+if it is not working fully, at that time.
+
+{\em I emphasize  that late submissions  will not receive  any credit.
+Computers\emdash     and life!\emdash  being   what   they are, expect
+everything  to  take  longer   than  you   expect, even    taking this
+expectation into account.  So start  early, and plan on getting things
+done well before the due  date.  Nothing short  of a nuclear explosion
+(in the CS building, not the South Pacific) constitutes a valid reason
+for an extension.
+
+\end{document}
+
+
+
+
