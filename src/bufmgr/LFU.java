@@ -93,8 +93,8 @@ class LFU extends  Replacer {
    *		return -1 if failed
    */
 
- public int pick_victim()
- {
+public int pick_victim()
+{
    //TODO:
    // int numBuffers = mgr.getNumBuffers();
    // int frame;
@@ -116,9 +116,9 @@ class LFU extends  Replacer {
    //          return frame;
    //      }
    //  }
-
-    return -1;
- }
+      
+       return -1;   // No victims found!!
+}
  
   /**
    * get the page replacement policy name

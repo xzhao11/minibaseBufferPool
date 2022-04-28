@@ -401,25 +401,52 @@ public class BufMgr implements GlobalConst{
       if (replacerArg == null) {
 	      replacer = new Clock(this);
       } else {
-	      if (replacerArg.compareTo("Clock") == 0) {
-	        replacer = new Clock(this);
-	        System.out.println("Replacer: Clock\n");
-	      }
-        else if (replacerArg.compareTo("LRU") == 0) {
-          replacer = new LRU(this);
-          System.out.println("Replacer: LRU\n");
-        }
-        else if (replacerArg.compareTo("MRU") == 0) {
-          replacer = new LRU(this);
-          System.out.println("Replacer: MRU\n");
-        } 
-        else if (replacerArg.compareTo("RNDM") == 0) {
-          replacer = new RNDM(this);
-          System.out.println("Replacer: RNDM\n");
-        } else {
-          replacer = new Clock(this);
-          System.out.println("Replacer:Unknown, Use Clock\n");
-        }
+	
+    	if (replacerArg.compareTo("Clock")==0)
+	  {
+	    replacer = new Clock(this);
+	    System.out.println("Replacer: Clock\n");
+	  }
+	else if(replacerArg.compareTo("LRU")==0)
+	  {
+	    replacer = new LRU(this);
+	    System.out.println("Replacer: LRU\n");
+	  }
+	else if(replacerArg.compareTo("MRU")==0)
+	  {
+	    replacer = new LRU(this);
+	    System.out.println("Replacer: MRU\n");
+	  }
+  else if(replacerArg.compareTo("LFU")==0)
+    {
+      replacer = new LFU(this);
+      System.out.println("Replacer: :LFU\n");
+    }
+  else if(replacerArg.compareTo("LIFO")==0)
+    {
+      replacer = new LIFO(this);
+      System.out.println("Replacer: LIFO\n");
+    }
+  else if(replacerArg.compareTo("FIFO")==0)
+    {
+      replacer = new FIFO(this);
+      System.out.println("Replacer: FIFO\n");
+    }
+  else if (replacerArg.compareTo("RNDM") == 0) 
+    {
+      replacer = new RNDM(this);
+      System.out.println("Replacer: RNDM\n");
+    } 
+  else if(replacerArg.compareTo("Optimal")==0)
+    {
+      replacer = new Optimal(this);
+      System.out.println("Replacer: Optimal\n");
+    }
+	else
+	  {
+	    replacer = new Clock(this);
+	    System.out.println("Replacer:Unknown, Use Clock\n");
+	  }
       }		
       
       replacer.setBufferManager(this);
@@ -534,6 +561,9 @@ public class BufMgr implements GlobalConst{
 	}
 	
         page.setpage(bufPool[frameNo]);
+        // if (replacer instanceof LFU) {
+        //   replacer.pin(frameNo);
+        // }
 	
         // return true;
 	
