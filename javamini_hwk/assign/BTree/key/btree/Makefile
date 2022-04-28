@@ -2,7 +2,7 @@ JAR=btreeAssign.jar
 ASSIGNMENT=BTree
 ASSIGN=/p/course/cs784-raghu/minibase_share/javaminibase/javamini_hwk/assign
 
-JDKPATH = /s/java
+JDKPATH = $(JAVA_HOME)
 LIBPATH = $(ASSIGN)/$(ASSIGNMENT)/lib/$(JAR)
 CLASSPATH = $(JDKPATH)/lib/classes.zip:.:..:$(LIBPATH)
 BINPATH = $(JDKPATH)/bin
