@@ -30,15 +30,12 @@ class FrameDesc implements GlobalConst{
    * pin_count.
    */
   public FrameDesc() {
-  
     pageNo = new PageId();
     pageNo.pid = INVALID_PAGE;
     dirty   = false;
     pin_cnt = 0;
     
   }
-  
-  
   
   /** Returns the pin count of a certain frame page. 
    *
@@ -60,9 +57,7 @@ class FrameDesc implements GlobalConst{
    * @return the decremented pin count.
    */
   public int unpin() {
-    
     pin_cnt = (pin_cnt <= 0) ? 0 : pin_cnt - 1;
-    
     return(pin_cnt);
   }
 }
@@ -85,7 +80,6 @@ class BufHTEntry {
   /** The frame we are stored in. */
   public int frameNo;  
 }
-
 
 // *****************************************************
 
@@ -151,59 +145,49 @@ class BufHashTbl implements GlobalConst{
    * on failure, otherwise the frame number.
    * @param pageNo page number in the bucket.
    */
-  public int lookup(PageId pageNo)
-    {
-      
-      BufHTEntry ent;
-      if (pageNo.pid == INVALID_PAGE)
-        return INVALID_PAGE;
-      
-      for (ent=ht[hash(pageNo)]; ent!=null; ent=ent.next) {
-        if (ent.pageNo.pid == pageNo.pid) {
-	  return(ent.frameNo);
-        }
-      }
-      
-      return(INVALID_PAGE);
-      
+  public int lookup(PageId pageNo) {
+    BufHTEntry ent;
+    if (pageNo.pid == INVALID_PAGE)
+      return INVALID_PAGE;
+    
+    for (ent=ht[hash(pageNo)]; ent!=null; ent=ent.next) {
+      if (ent.pageNo.pid == pageNo.pid)
+        return(ent.frameNo);
     }
+    
+    return(INVALID_PAGE);
+  }
   
   /** Remove the page from the hashtable.
    * @param pageNo page number of the bucket.
    */
-  public boolean remove(PageId pageNo)
-    {
-      
-      BufHTEntry cur, prev = null;
-      
-      // Allow INVALID_PAGE to be removed all they want.
-      if (pageNo.pid == INVALID_PAGE)
-	return true;
-      
-      int indx = hash(pageNo);
-      for (cur=ht[indx]; cur!=null; cur=cur.next) {
-	
-        if (cur.pageNo.pid == pageNo.pid)
-	  break;
-        prev = cur;
-      }
-      
-      if (cur != null) {
-        if (prev != null)
-	  prev.next = cur.next;
-        else
-	  ht[indx] = cur.next;
-	
-      } else {
-        System.err.println ("ERROR: Page " + pageNo.pid
-			    + " was not found in hashtable.\n");
-        
-	return false;
-      }
-      
+  public boolean remove(PageId pageNo) {
+    BufHTEntry cur, prev = null;
+    
+    // Allow INVALID_PAGE to be removed all they want.
+    if (pageNo.pid == INVALID_PAGE)
       return true;
-      
+    
+    int indx = hash(pageNo);
+    for (cur=ht[indx]; cur!=null; cur=cur.next) {
+      if (cur.pageNo.pid == pageNo.pid)
+        break;
+      prev = cur;
     }
+    
+    if (cur != null) {
+      if (prev != null)
+        prev.next = cur.next;
+      else
+        ht[indx] = cur.next;
+    } else {
+      System.err.println ("ERROR: Page " + pageNo.pid
+        + " was not found in hashtable.\n");
+      return false;
+    }
+    
+    return true;
+  }
   
   /** Show hashtable contents. */
   public void display() {
@@ -240,11 +224,9 @@ class BufHashTbl implements GlobalConst{
 class Clock extends Replacer {
   
   /** Creates a clock object. */
-  public Clock(BufMgr javamgr)
-    {
-      super(javamgr);
-      
-    }
+  public Clock(BufMgr javamgr) {
+    super(javamgr);    
+  }
   
   /** Picks up the victim frame to be replaced according to
    * the clock algorithm.  Pin the victim so that other
@@ -297,12 +279,11 @@ class Clock extends Replacer {
   public final String name() { return "Clock"; }
   
   /** Displays information from clock replacement algorithm. */ 
-  public void info()
-    {
-      super.info();
-      System.out.println ("Clock hand:\t" + head);
-      System.out.println ("\n\n");
-    }
+  public void info() {
+    super.info();
+    System.out.println ("Clock hand:\t" + head);
+    System.out.println ("\n\n");
+  }
   
 } // end of Clock
 
@@ -407,9 +388,7 @@ public class BufMgr implements GlobalConst{
    * @param numbufs number of buffers in the buffer pool.
    * @param replacerArg name of the buffer replacement policy.
    */
-  public BufMgr( int numbufs, String replacerArg )
-  	
-    {
+  public BufMgr(int numbufs, String replacerArg) {
       
       numBuffers = numbufs;  
       frmeTable = new FrameDesc[numBuffers];
@@ -417,12 +396,10 @@ public class BufMgr implements GlobalConst{
       frmeTable = new FrameDesc[numBuffers];
       
       for (int i=0; i<numBuffers; i++)  // initialize frameTable
-	frmeTable[i] = new FrameDesc();
+	      frmeTable[i] = new FrameDesc();
       
       if (replacerArg == null) {
-	
-        replacer = new Clock(this);
-	
+	      replacer = new Clock(this);
       } else {
 	
     	if (replacerArg.compareTo("Clock")==0)
@@ -455,11 +432,11 @@ public class BufMgr implements GlobalConst{
       replacer = new FIFO(this);
       System.out.println("Replacer: FIFO\n");
     }
-  else if(replacerArg.compareTo("Random")==0)
+  else if (replacerArg.compareTo("RNDM") == 0) 
     {
-      replacer = new Random(this);
-      System.out.println("Replacer: Random\n");
-    }
+      replacer = new RNDM(this);
+      System.out.println("Replacer: RNDM\n");
+    } 
   else if(replacerArg.compareTo("Optimal")==0)
     {
       replacer = new Optimal(this);
@@ -472,17 +449,13 @@ public class BufMgr implements GlobalConst{
 	  }
       }		
       
-      replacer.setBufferManager( this );
-      
-    }
-  
-  
+      replacer.setBufferManager(this);
+  }
+
   // Debug use only   
-  private void bmhashdisplay()
-    {
-      hashTable.display();
-    }
-  
+  private void bmhashdisplay() {
+    hashTable.display();
+  }
   
   /** Check if this page is in buffer pool, otherwise
    * find a frame for this page, read in and pin it.

@@ -14,10 +14,6 @@ import global.*;
    //  Pinned = 14;
   }
 
-
-
-
-
 /** A super class for buffer pool replacement algorithm. It describes
  * which frame to be picked up for replacement by a certain replace
  * algorithm.
@@ -32,11 +28,8 @@ abstract class Replacer implements GlobalConst
    *                        or bigger than number of buffers.
    * @return true if successful.
    */
-  public void pin( int frameNo ) throws InvalidFrameNumberException 
-  {
-    
+  public void pin(int frameNo) throws InvalidFrameNumberException {
     if ((frameNo < 0) || (frameNo >= (int)mgr.getNumBuffers())) {
-   
       throw new InvalidFrameNumberException (null, "BUFMGR: BAD_BUFFRAMENO.");
     }
 
