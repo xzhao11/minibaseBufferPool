@@ -96,27 +96,33 @@ class LFU extends  Replacer {
 public int pick_victim()
 {
    //TODO:
-   // int numBuffers = mgr.getNumBuffers();
-   // int frame;
+   int numBuffers = mgr.getNumBuffers();
+   int frame;
    
-   //  if ( nframes < numBuffers ) {
-   //      frame = nframes++;
-   //      frames[frame] = frame;
-   //      state_bit[frame].state = Pinned;
-   //      (mgr.frameTable())[frame].pin();
-   //      return frame;
-   //  }
-
-   //  for ( int i = 0; i < numBuffers; ++i ) {
-   //       frame = frames[i];
-   //      if ( state_bit[frame].state != Pinned ) {
-   //          state_bit[frame].state = Pinned;
-   //          (mgr.frameTable())[frame].pin();
-   //          update(frame);
-   //          return frame;
-   //      }
-   //  }
-      
+    if ( nframes < numBuffers ) {
+        frame = nframes++;
+        frames[frame] = frame;
+        state_bit[frame].state = Pinned;
+        (mgr.frameTable())[frame].pin();
+        return frame;
+    }
+    int min_count = Integer.MAX_VALUE;
+    int least_frequent_page = -1;
+    for ( int i = 0; i < numBuffers; ++i ) {
+         frame = frames[i];
+         int pin_count = (mgr.frameTable())[frame].pin_count();
+         if (pin_count < min_count) {
+            min_count = pin_count;
+            least_frequent_page = i;
+         }
+    }
+    if (least_frequent_page != -1) {
+        frame = frames[least_frequent_page];
+        state_bit[frame].state = Pinned;
+        (mgr.frameTable())[frame].pin();
+        update(frame);
+        return frame;
+    }
        return -1;   // No victims found!!
 }
  
