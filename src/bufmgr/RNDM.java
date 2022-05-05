@@ -87,28 +87,6 @@ class RNDM extends Replacer {
    *		return -1 if failed
    */
   public int pick_victim() {
-   // TODO:
-   // int numBuffers = mgr.getNumBuffers();
-   // int frame;
-   
-   //  if ( nframes < numBuffers ) {
-   //      frame = nframes++;
-   //      frames[frame] = frame;
-   //      state_bit[frame].state = Pinned;
-   //      (mgr.frameTable())[frame].pin();
-   //      return frame;
-   //  }
-
-   //  for ( int i = 0; i < numBuffers; ++i ) {
-   //       frame = frames[i];
-   //      if ( state_bit[frame].state != Pinned ) {
-   //          state_bit[frame].state = Pinned;
-   //          (mgr.frameTable())[frame].pin();
-   //          update(frame);
-   //          return frame;
-   //      }
-   //  }
-
     int numBuffers = mgr.getNumBuffers();
     int frame;
 
@@ -125,7 +103,7 @@ class RNDM extends Replacer {
 
       while (numSeenFrames < nframes) {
         frame = rand.nextInt(nframes);      
-        if (state_bit[frame].state != Pinned) {
+        if (state_bit[frame].state != 0) {
           state_bit[frame].state = Pinned;
           (mgr.frameTable())[frame].pin();
           update(frame);

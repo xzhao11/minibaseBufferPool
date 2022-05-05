@@ -245,16 +245,16 @@ class Clock extends Replacer {
       
       head = (head+1) % numBuffers;
       while ( state_bit[head].state != Available ) {
-	if ( state_bit[head].state == Referenced )
-	  state_bit[head].state = Available;
+	      if ( state_bit[head].state == Referenced )
+	        state_bit[head].state = Available;
 	
-	if ( num == 2*numBuffers ) {
-	  
-	  throw new BufferPoolExceededException (null, "BUFMGR: BUFFER_EXCEEDED.");
-	  
-	}
-	++num;
-	head = (head+1) % numBuffers;
+        if ( num == 2*numBuffers ) {
+          
+          throw new BufferPoolExceededException (null, "BUFMGR: BUFFER_EXCEEDED.");
+          
+        }
+        ++num;
+        head = (head+1) % numBuffers;
       }
       
       // Make sure pin count is 0.
