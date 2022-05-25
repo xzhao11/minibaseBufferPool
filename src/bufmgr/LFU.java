@@ -4,6 +4,9 @@ package bufmgr;
 
 import diskmgr.*;
 import global.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Comparator;
 
   /**
    * class LFU is a subclass of class Replacer using LFU
@@ -17,7 +20,7 @@ class LFU extends  Replacer {
    */
 
     private int  frames[];
- 
+    private Map<Integer, Integer> counts;
   /**
    * private field
    * number of frames used
@@ -30,6 +33,8 @@ class LFU extends  Replacer {
    */
   private void update(int frameNo)
   {
+
+
      int index;
      for ( index=0; index < nframes; ++index )
         if ( frames[index] == frameNo )
@@ -55,7 +60,9 @@ class LFU extends  Replacer {
         super.setBufferManager(mgr);
 	frames = new int [ mgr.getNumBuffers() ];
 	nframes = 0;
-     }
+
+    counts = new HashMap<>();
+    }
 
 /* public methods */
 
@@ -80,7 +87,8 @@ class LFU extends  Replacer {
  public void pin(int frameNo) throws InvalidFrameNumberException
  {
     super.pin(frameNo);
-
+    counts.putIfAbsent(frameNo, 0);
+    counts.put(frameNo, counts.get(frameNo)+1);
     update(frameNo);
     
  }
@@ -95,7 +103,6 @@ class LFU extends  Replacer {
 
 public int pick_victim()
 {
-   //TODO:
    int numBuffers = mgr.getNumBuffers();
    int frame;
    
@@ -104,26 +111,30 @@ public int pick_victim()
         frames[frame] = frame;
         state_bit[frame].state = Pinned;
         (mgr.frameTable())[frame].pin();
+        counts.putIfAbsent(frame, 0);
+        counts.put(frame, counts.get(frame)+1);
+        System.out.println(frame);
         return frame;
     }
     int min_count = Integer.MAX_VALUE;
     int least_frequent_page = -1;
     for ( int i = 0; i < numBuffers; ++i ) {
-         frame = frames[i];
-         int pin_count = (mgr.frameTable())[frame].pin_count();
-         if (pin_count < min_count) {
-            min_count = pin_count;
-            least_frequent_page = i;
-         }
+        frame = frames[i];
+        if (counts.get(frame) < min_count) {
+            if ( state_bit[frame].state != Pinned ) {
+                least_frequent_page = frame;
+                min_count = counts.get(frame);
+            }
+        }
     }
     if (least_frequent_page != -1) {
-        frame = frames[least_frequent_page];
-        state_bit[frame].state = Pinned;
-        (mgr.frameTable())[frame].pin();
-        update(frame);
-        return frame;
+        state_bit[least_frequent_page].state = Pinned;
+        (mgr.frameTable())[least_frequent_page].pin();
+        update(least_frequent_page);
+        counts.put(least_frequent_page, 1);
     }
-       return -1;   // No victims found!!
+                    
+    return least_frequent_page;
 }
  
   /**

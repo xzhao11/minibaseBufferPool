@@ -856,6 +856,7 @@ public class BufMgr implements GlobalConst{
       SystemDefs.JavabaseDB.deallocate_page(pageno);
     }
     catch (Exception e) {
+      e.printStackTrace();
       throw new BufMgrException(e,"BufMgr.java: deallocate_page() failed");
     }
     
