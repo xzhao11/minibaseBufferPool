@@ -14,8 +14,14 @@ all: $(PROGS)
 BMTest:BMTest.java
 	$(JAVAC) TestDriver.java BMTest.java
 
+BMLFUTest:BMLFUTest.java
+	$(JAVAC) TestDriver.java BMLFUTest.java
+
 bmtest: BMTest
 	$(JAVA) tests.BMTest
+
+bmlfutest: BMLFUTest
+	$(JAVA) tests.BMLFUTest
 
 # test disk manager
 
