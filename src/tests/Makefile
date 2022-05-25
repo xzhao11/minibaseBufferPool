@@ -23,6 +23,14 @@ bmtest: BMTest
 bmlfutest: BMLFUTest
 	$(JAVA) tests.BMLFUTest
 
+# test RNDM algorithm
+
+RNDMTest:RNDM_Test.java
+	$(JAVAC) TestDriver.java RNDM_Test.java
+
+rndmtest: RNDMTest
+	$(JAVA) tests.RNDM_Test
+
 # test disk manager
 
 DBTest:DBTest.java
