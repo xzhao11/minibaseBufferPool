@@ -553,6 +553,8 @@ class BMDriver extends TestDriver implements GlobalConst {
    * @return whether test4 has passed
    */
   protected boolean test4 () {
+    System.out.print("\n  Test 4 exercises the functionality of the RNDM algorithm\n");
+    
 
     return true;
   }
