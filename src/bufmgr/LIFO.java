@@ -22,23 +22,35 @@ class LIFO extends  Replacer {
    * private field
    * number of frames used
    */   
-  private int  nframes;
+  private int nframes;
 
-  /**
-   * This pushes the given frame to the end of the list.
-   * @param frameNo	the frame number
-   */
-  private void update(int frameNo)
-  {
-     int index;
-     for ( index=0; index < nframes; ++index )
-        if ( frames[index] == frameNo )
-            break;
+/**
+ * Adding the frame with given frame number to buffer pool
+ * putting it in front of the list
+ *
+ * @param	frameNo	 the frame number
+ * @see 	BufMgr
+ */
 
-    while ( ++index < nframes )
-        frames[index-1] = frames[index];
-        frames[nframes-1] = frameNo;
-  }
+private void update(int frameNo)
+{
+    int index;
+    int numBuffers=mgr.getNumBuffers();
+   for ( index=0; index < numBuffers; ++index )
+       if ( frames[index] < 0  ||  frames[index] == frameNo )
+           break;
+
+
+   // If buffer pool is not yet full, add this frame to it...
+   if ( frames[index] < 0 )
+       frames[index] = frameNo;
+
+   int frame = frames[index];
+   while ( index-- >0)
+     frames[index+1] = frames[index];
+       
+ frames[0] = frame;
+}
 
   /**
    * Calling super class the same method
@@ -95,29 +107,30 @@ class LIFO extends  Replacer {
 
  public int pick_victim()
  {
-   //TODO:
-   // int numBuffers = mgr.getNumBuffers();
-   // int frame;
-   
-   //  if ( nframes < numBuffers ) {
-   //      frame = nframes++;
-   //      frames[frame] = frame;
-   //      state_bit[frame].state = Pinned;
-   //      (mgr.frameTable())[frame].pin();
-   //      return frame;
-   //  }
+    int numBuffers = mgr.getNumBuffers();
+    int i, frame;
 
-   //  for ( int i = 0; i < numBuffers; ++i ) {
-   //       frame = frames[i];
-   //      if ( state_bit[frame].state != Pinned ) {
-   //          state_bit[frame].state = Pinned;
-   //          (mgr.frameTable())[frame].pin();
-   //          update(frame);
-   //          return frame;
-   //      }
-   //  }
-
-    return -1;
+      for ( i = 0; i < numBuffers; ++i )
+        if (frames[i] < 0) {
+          if ( i == 0 )
+              frames[i] = 0;
+          else
+              frames[i] *= -1;
+          frame = frames[i];
+          state_bit[frame].state = Pinned;
+          (mgr.frameTable())[frame].pin();
+          update(frame);
+          return frame;
+      }
+      
+      //if no free frame is found, return frame at top of stack
+      frame = frames[0];
+      if (state_bit[frame].state != 0) {
+        state_bit[frame].state = Pinned;
+        (mgr.frameTable())[frame].pin();
+      }
+      update(frame);
+      return(frame);
  }
  
   /**
