@@ -1,8 +1,5 @@
 CSC 468 Final Project
 
-Link to GitHub repository with software system: 
-https://github.com/xzhao11/minibaseBufferPool
-
 We modified the Minibase DBMS with 3 new buffer pool algorithms.
 The existing system had support for the Clock, Most Recently Used (MRU), and Least Recently Used (LRU) algorithms.
 We added support for the Least Frequently Used (LFU), Last In First Out (LIFO), and Random choice algorithms.
