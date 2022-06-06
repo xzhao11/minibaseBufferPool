@@ -15,3 +15,19 @@ When the buffer pool was full, any new frames just overrote the top frame of the
 
 
 Random:
+This algorithm was implemented using the Random java libary.
+Before the buffer pool is full, new frames are added sequentially.
+Once the buffer pool was full, the algorithm randomly chose the next victim. 
+
+How to Run:
+cd src/tests
+make <test_type>
+make <test_type_run>
+
+*See src/tests/Makefile for specific commands
+**test_type is the type of algorithm you want to test_type
+**test_type_run will run the commands needed to run the files made from test_type
+
+Notes:
+- Our algorithms were required to "pin" based on the original implementation even though pinning was not needed
+- Our algorithms do not pass the original test 3 as this test is specific to the Clock algorithm and pinning
