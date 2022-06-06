@@ -1,0 +1,20 @@
+CSC 468 Final Project
+
+Link to GitHub repository with software system: 
+https://github.com/xzhao11/minibaseBufferPool
+
+We modified the Minibase DBMS with 3 new buffer pool algorithms.
+The existing system had support for the Clock, Most Recently Used (MRU), and Least Recently Used (LRU) algorithms.
+We added support for the Least Frequently Used (LFU), Last In First Out (LIFO), and Random choice algorithms.
+
+LFU:
+
+LIFO:
+This algorithm was implemented as a LIFO stack as a simple array in Java. 
+While an ArrayList would be easier to work with, the existing codebase used the array implementation in other areas so it was used here as well.
+
+When new frames were added to the buffer pool they were added to the top of the stack until the stack was full.
+When the buffer pool was full, any new frames just overrote the top frame of the stack (the first frame in the array) since it was the last one in.
+
+
+Random:

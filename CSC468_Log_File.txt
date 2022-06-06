@@ -1,0 +1,11 @@
+CSC 468 Project Log File
+
+Jack:
+*Implemented random buffer pool algorithm & tests
+
+
+Varenna:
+*Implemented LIFO buffer pool algorithm & tests
+
+Curly:
+*Implemented LFU buffer pool algorithm & tests
