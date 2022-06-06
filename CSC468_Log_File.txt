@@ -3,9 +3,13 @@ CSC 468 Project Log File
 Jack:
 *Implemented random buffer pool algorithm & tests
 
-
 Varenna:
 *Implemented LIFO buffer pool algorithm & tests
 
 Curly:
 *Implemented LFU buffer pool algorithm & tests
+
+Everyone:
+*Collaborated on configuring dev environment
+*Figured out how to run original system
+*Found where changes need to be made
