@@ -89,7 +89,7 @@ class LFU extends  Replacer {
     super.pin(frameNo);
     counts.putIfAbsent(frameNo, 0);
     counts.put(frameNo, counts.get(frameNo)+1);
-    update(frameNo);
+    // update(frameNo);
     
  }
 
@@ -128,7 +128,7 @@ public int pick_victim()
     if (least_frequent_page != -1) {
         state_bit[least_frequent_page].state = Pinned;
         (mgr.frameTable())[least_frequent_page].pin();
-        update(least_frequent_page);
+        // update(least_frequent_page);
         counts.put(least_frequent_page, 1);
     }
                     
