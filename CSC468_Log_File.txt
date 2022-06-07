@@ -5,9 +5,11 @@ Jack:
 
 Varenna:
 *Implemented LIFO buffer pool algorithm & tests
+*Implemented FIFO buffer pool algorithm & tests
 
 Curly:
 *Implemented LFU buffer pool algorithm & tests
+*Helped debug LIFO & figure out how to implement FIFO
 
 Everyone:
 *Collaborated on configuring dev environment
