@@ -105,7 +105,6 @@ public int pick_victim()
 {
    int numBuffers = mgr.getNumBuffers();
    int frame;
-   
     if ( nframes < numBuffers ) {
         frame = nframes++;
         frames[frame] = frame;
@@ -113,7 +112,6 @@ public int pick_victim()
         (mgr.frameTable())[frame].pin();
         counts.putIfAbsent(frame, 0);
         counts.put(frame, counts.get(frame)+1);
-        System.out.println(frame);
         return frame;
     }
     int min_count = Integer.MAX_VALUE;
