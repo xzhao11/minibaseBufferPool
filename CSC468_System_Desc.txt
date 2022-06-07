@@ -4,22 +4,22 @@ We modified the Minibase DBMS with 3 new buffer pool algorithms.
 The existing system had support for the Clock, Most Recently Used (MRU), and Least Recently Used (LRU) algorithms.
 We added support for the Least Frequently Used (LFU), Last In First Out (LIFO), and Random choice algorithms.
 
-We added 3 new classes and modified mainly the pick_victim function in each class to choose replacement based on different algorithm.
+We added 3 new classes and modified mainly the pick_victim and pin function in each class to choose replacement based on different algorithm.
 
-LFU:
+LFU (bufmgr/LFU):
 This algorithm was implemented based on a hashmap that maps frame number to pin/use counts since it was brought into buffer pool
 Before the buffer pool is full, new frames are added sequentially, and the map is updated to have count as 1 for all frames
-If there need to be a victim to pick, find the frame in the candidate list with the smallest count (by checking in the hashmap) and pick it (and reset count to 1)
+If there need to be a victim to pick, find the frame in the candidate list(frames, and ignore those pinned) with the smallest count (by checking in the hashmap) and pick it (and reset count to 1)
 When a frame is pinned and the page associated is already in the buffer pool, update the hashmap to increment count
 
-LIFO:
+LIFO (bufmgr/LIFO):
 This algorithm was implemented as a LIFO stack as a simple array in Java. 
 While an ArrayList would be easier to work with, the existing codebase used the array implementation in other areas so it was used here as well.
 
 When new frames were added to the buffer pool they were added to the top of the stack until the stack was full.
 When the buffer pool was full, any new frames just overrote the top frame of the stack (the first frame in the array that is a proper candidate - it is not pinned) since it was the last one in.
 
-Random:
+Random (bufmgr/RNDM):
 This algorithm was implemented using the Random java libary.
 Before the buffer pool is full, new frames are added sequentially.
 Once the buffer pool was full, the algorithm randomly chose the next victim. 
@@ -30,9 +30,5 @@ make <test_type>
 make <test_type_run>
 
 *See src/tests/Makefile for specific commands
-**test_type is the type of algorithm you want to test
-**test_type_run will run the commands needed to run the files made from test_type
-
-Notes:
-- Our algorithms were required to "pin" based on the original implementation even though pinning was not needed
-- Our algorithms do not pass the original test 3 as this test is specific to the Clock algorithm and pinning
+**test_type is the type of algorithm you want to test(BMLFUTest/BMLIFOTest/RNDMTest)
+**test_type_run will run the commands needed to run the files made from test_type(bmlfutest/bmlifotest/rndmtest)
