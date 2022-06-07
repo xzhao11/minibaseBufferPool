@@ -31,6 +31,13 @@ BMLIFOTest:LIFO_Test.java
 bmlifotest: BMLIFOTest
 	$(JAVA) tests.LIFO_Test
 
+# test fifo algorithm
+BMFIFOTest:FIFO_Test.java
+	$(JAVAC) TestDriver.java FIFO_Test.java
+
+bmfifotest: BMFIFOTest
+	$(JAVA) tests.FIFO_Test
+
 # test RNDM algorithm
 
 RNDMTest:RNDM_Test.java

@@ -81,7 +81,7 @@ class FIFO extends  Replacer {
  {
     super.pin(frameNo);
 
-    update(frameNo);
+    //update(frameNo);
     
  }
 
@@ -93,32 +93,32 @@ class FIFO extends  Replacer {
    *		return -1 if failed
    */
 
- public int pick_victim()
- {
-   //TODO:
-   // int numBuffers = mgr.getNumBuffers();
-   // int frame;
-   
-   //  if ( nframes < numBuffers ) {
-   //      frame = nframes++;
-   //      frames[frame] = frame;
-   //      state_bit[frame].state = Pinned;
-   //      (mgr.frameTable())[frame].pin();
-   //      return frame;
-   //  }
-
-   //  for ( int i = 0; i < numBuffers; ++i ) {
-   //       frame = frames[i];
-   //      if ( state_bit[frame].state != Pinned ) {
-   //          state_bit[frame].state = Pinned;
-   //          (mgr.frameTable())[frame].pin();
-   //          update(frame);
-   //          return frame;
-   //      }
-   //  }
-
-    return -1;
- }
+  public int pick_victim()
+  {
+    int numBuffers = mgr.getNumBuffers();
+    int frame;
+    
+     if ( nframes < numBuffers ) {
+         frame = nframes++;
+         frames[frame] = frame;
+         state_bit[frame].state = Pinned;
+         (mgr.frameTable())[frame].pin();
+         return frame;
+     }
+ 
+     for ( int i = 0; i < numBuffers; ++i ) {
+          frame = frames[i];
+         if ( state_bit[frame].state != Pinned ) {
+             state_bit[frame].state = Pinned;
+             (mgr.frameTable())[frame].pin();
+             update(frame);
+             return frame;
+         }
+     }
+ 
+     return -1;
+  }
+ 
  
   /**
    * get the page replacement policy name
