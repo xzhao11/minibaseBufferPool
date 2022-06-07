@@ -4,7 +4,13 @@ We modified the Minibase DBMS with 3 new buffer pool algorithms.
 The existing system had support for the Clock, Most Recently Used (MRU), and Least Recently Used (LRU) algorithms.
 We added support for the Least Frequently Used (LFU), Last In First Out (LIFO), and Random choice algorithms.
 
+We added 3 new classes and modified mainly the pick_victim function in each class to choose replacement based on different algorithm.
+
 LFU:
+This algorithm was implemented based on a hashmap that maps frame number to pin/use counts since it was brought into buffer pool
+Before the buffer pool is full, new frames are added sequentially, and the map is updated to have count as 1 for all frames
+If there need to be a victim to pick, find the frame in the candidate list with the smallest count (by checking in the hashmap) and pick it (and reset count to 1)
+When a frame is pinned and the page associated is already in the buffer pool, update the hashmap to increment count
 
 LIFO:
 This algorithm was implemented as a LIFO stack as a simple array in Java. 
@@ -25,7 +31,7 @@ make <test_type>
 make <test_type_run>
 
 *See src/tests/Makefile for specific commands
-**test_type is the type of algorithm you want to test_type
+**test_type is the type of algorithm you want to test
 **test_type_run will run the commands needed to run the files made from test_type
 
 Notes:

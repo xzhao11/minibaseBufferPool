@@ -103,7 +103,7 @@ class RNDM extends Replacer {
 
       while (numSeenFrames < nframes) {
         frame = rand.nextInt(nframes);      
-        if (state_bit[frame].state != 0) {
+        if (state_bit[frame].state != Pinned) {
           state_bit[frame].state = Pinned;
           (mgr.frameTable())[frame].pin();
           update(frame);

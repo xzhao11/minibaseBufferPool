@@ -14,14 +14,22 @@ all: $(PROGS)
 BMTest:BMTest.java
 	$(JAVAC) TestDriver.java BMTest.java
 
-BMLFUTest:BMLFUTest.java
-	$(JAVAC) TestDriver.java BMLFUTest.java
-
 bmtest: BMTest
 	$(JAVA) tests.BMTest
 
+# test lfu algorithm
+BMLFUTest:BMLFUTest.java
+	$(JAVAC) TestDriver.java BMLFUTest.java
+
 bmlfutest: BMLFUTest
 	$(JAVA) tests.BMLFUTest
+
+# test lifo algorithm
+BMLIFOTest:LIFO_Test.java
+	$(JAVAC) TestDriver.java LIFO_Test.java
+
+bmlifotest: BMLIFOTest
+	$(JAVA) tests.LIFO_Test
 
 # test RNDM algorithm
 

@@ -321,6 +321,13 @@ class BMDriver extends TestDriver implements GlobalConst {
           System.err.print("*** Pinning too many pages\n");
           System.out.println ("  --> Failed as expected \n");
         }
+          if (status == OK) {
+      status = checkException (e, "bufmgr.ReplacerException");
+        if (status == FAIL) {
+    System.err.print("*** Pinning too many pages\n");
+    System.out.println ("  --> Failed as expected \n");
+  }
+}
       }
       catch (Exception e) {e.printStackTrace();}
       
