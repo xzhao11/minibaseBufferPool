@@ -65,7 +65,10 @@ private void update(int frameNo)
     public void setBufferManager( BufMgr mgr )
      {
         super.setBufferManager(mgr);
-	frames = new int [ mgr.getNumBuffers() ];
+        int numBuffers = mgr.getNumBuffers();
+	       frames = new int [ numBuffers];
+      for ( int index = 0; index < numBuffers; ++index )
+        frames[index] = -index;
 	nframes = 0;
      }
 
@@ -93,7 +96,7 @@ private void update(int frameNo)
  {
     super.pin(frameNo);
 
-    update(frameNo);
+    // update(frameNo);
     
  }
 
@@ -124,13 +127,17 @@ private void update(int frameNo)
       }
       
       //if no free frame is found, return frame at top of stack
-      frame = frames[0];
-      if (state_bit[frame].state != 0) {
-        state_bit[frame].state = Pinned;
-        (mgr.frameTable())[frame].pin();
+      for ( i = 0; i < numBuffers; ++i ) {
+        frame = frames[i];
+        if (state_bit[frame].state != Pinned) {
+          state_bit[frame].state = Pinned;
+          (mgr.frameTable())[frame].pin();
+          update(frame);
+          return(frame);
+        }
       }
-      update(frame);
-      return(frame);
+
+      return -1;
  }
  
   /**
